@@ -25,7 +25,8 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(`${URL}/api/auth/login`, formData,
+      const res = await axios.post("https://auto-market-m817.vercel.app/api/auth/login", formData,
+      // const res = await axios.post(`${URL}/api/auth/login`, formData,
         {
           withCredentials: true,
         });
