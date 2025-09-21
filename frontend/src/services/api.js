@@ -1,7 +1,7 @@
 // import axios from "axios";
 // import api from "../api";
 
-const URL = process.env.BASE_URL || "http://localhost:5000";
+const URL = "https://auto-market-m817.vercel.app";
 
 export default URL;
 

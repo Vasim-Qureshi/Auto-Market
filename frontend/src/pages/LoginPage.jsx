@@ -2,12 +2,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
-import URL from '../services/api'; // Adjust the import path as necessary
+import URL from '../services/api.js'; // Adjust the import path as necessary
 import { useAuth } from '../hooks/useAuth';
 
 const LoginPage = () => {
-
-
+  
+  console.log(URL);
+  
   const { login } = useAuth();
 
 
