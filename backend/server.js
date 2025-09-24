@@ -21,10 +21,12 @@ dotenv.config();
 
 const app = express();
 
+// const allowedOrigins = ["https://auto-market-neon.vercel.app", "https://automarket.globalinfotechnology.in", "http://localhost:3000"]
+
 // Middleware
 app.use(cors(
   {
-    origin: "https://auto-market-neon.vercel.app",
+    origin: "https://automarket.globalinfotechnology.in",
     credentials: true, // Important for cookies
   }
 ));
