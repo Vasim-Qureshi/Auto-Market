@@ -3,12 +3,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => (
-  <footer className="fixed-bottom bg-dark text-white text-center py-3">
+  <footer className="fixed-bottom bg-dark text-light text-center py-3">
     <div className="container">
       <div className="mb-2">
-        <a href="https://facebook.com" className="text-white mx-2">Facebook</a>
-        <a href="https://twitter.com" className="text-white mx-2">Twitter</a>
-        <a href="https://instagram.com" className="text-white mx-2">Instagram</a>
+        <a href="https://facebook.com" className="text-light mx-2">Facebook</a>
+        <a href="https://twitter.com" className="text-light mx-2">Twitter</a>
+        <a href="https://instagram.com" className="text-light mx-2">Instagram</a>
       </div>
       <div>
         <Link to="/privacy-policy">Privacy Policy</Link> |

@@ -26,7 +26,8 @@ const app = express();
 // Middleware
 app.use(cors(
   {
-    origin: "https://automarket.globalinfotechnology.in",
+    origin: "http://localhost:5173" || "https://automarket.globalinfotechnology.in",
+    // origin: "https://automarket.globalinfotechnology.in",
     credentials: true, // Important for cookies
   }
 ));

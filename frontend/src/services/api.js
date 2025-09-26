@@ -1,7 +1,7 @@
 // import axios from "axios";
 // import api from "../api";
 
-const URL = "https://auto-market-m817.vercel.app";
+const URL = import.meta.env.VITE_BASE_URL || 'http://localhost:5000';
 
 export default URL;
 
