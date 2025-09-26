@@ -295,7 +295,7 @@ const AddVehiclePage = () => {
               type="file"
               className="form-control"
               onChange={handleFileChange}
-              accept="image/*"
+              accept="image/*" // Accept all image files
               required
             />
             {uploading && <div className="text-primary mt-1">Uploading...</div>}
