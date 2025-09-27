@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import URL from "../services/api";
 
 // ContactBuyerProposalForm.jsx
 // Usage notes:
@@ -79,7 +80,7 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
       };
 
       // TODO: replace this with your real API call, e.g.:
-      await fetch('http://localhost:5000/api/proposal',
+      await fetch(`${URL}/api/proposal`,
         {
           method: 'POST',
           body: JSON.stringify(payload),
