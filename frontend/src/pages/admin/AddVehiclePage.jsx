@@ -41,8 +41,8 @@ const AddVehiclePage = () => {
     // console.log('Uploading image:', imageFile);
     try {
       const token = localStorage.getItem('token');
-      // const res = await axios.post(`${URL}/api/upload/image`, form, {
-      const res = await axios.post(`${URL}/api/upload/image/cloudinary`, form, {
+      const res = await axios.post(`${URL}/api/upload/image`, form, {
+      // const res = await axios.post(`${URL}/api/upload/image/cloudinary`, form, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
