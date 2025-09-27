@@ -38,7 +38,7 @@ const AddVehiclePage = () => {
     const form = new FormData();
     form.append('image', imageFile);
     setUploading(true);
-    console.log('Uploading image:', imageFile);
+    // console.log('Uploading image:', imageFile);
     try {
       const token = localStorage.getItem('token');
       // const res = await axios.post(`${URL}/api/upload/image`, form, {
