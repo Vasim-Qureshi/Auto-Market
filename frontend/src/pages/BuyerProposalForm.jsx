@@ -86,20 +86,25 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
           body: JSON.stringify(payload),
           headers: { 'Content-Type': 'application/json' }
         })
-
-      // make JSON download for demo
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `vehicle-proposal-${vehicle.id || "unknown"}.json`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-
-      setSuccessMsg("Proposal submitted — demo JSON downloaded. Replace demo code with real API call in src/components/ContactBuyerProposalForm.jsx");
-      setForm((s) => ({ ...s, offer: "" }));
+      /*
+            // make JSON download for demo
+            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = `vehicle-proposal-${vehicle.id || "unknown"}.json`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+      
+            setSuccessMsg("Proposal submitted — demo JSON downloaded. Replace demo code with real API call in src/components/ContactBuyerProposalForm.jsx");
+      */
+      setSuccessMsg("Proposal submitted successfully. The seller will contact you soon.");
+      setForm((s) => ({
+        ...s,
+        offer: "",
+      }));
       setErrors({});
     } catch (err) {
       console.error(err);
@@ -128,11 +133,11 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
                 <label className="form-label">Contacting seller about:</label>
                 {/* Vehicle details */}
                 <div className="border rounded p-2 bg-light">
-                <h5 className="mb-1">{`${vehicle.type || "Unknown"}`}</h5>
-                <h6>{`${vehicle.make || ""} ${vehicle.model || ""}`}</h6>
-                <p className="small text-muted mb-1">Year: {vehicle.year || "—"}</p>
-                <p className="small text-muted mb-1">Listed price: {vehicle.price ? `₹ ${vehicle.price}` : "—"}</p>
-                <p className="small text-muted">Vehicle ID: {vehicle.id || "—"}</p>
+                  <h5 className="mb-1">{`${vehicle.type || "Unknown"}`}</h5>
+                  <h6>{`${vehicle.make || ""} ${vehicle.model || ""}`}</h6>
+                  <p className="small text-muted mb-1">Year: {vehicle.year || "—"}</p>
+                  <p className="small text-muted mb-1">Listed price: {vehicle.price ? `₹ ${vehicle.price}` : "—"}</p>
+                  <p className="small text-muted">Vehicle ID: {vehicle.id || "—"}</p>
                 </div>
               </div>
             </div>
