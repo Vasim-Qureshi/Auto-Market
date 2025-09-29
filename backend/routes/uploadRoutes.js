@@ -10,7 +10,10 @@ const router = express.Router();
 router.post('/image', protect, adminOnly, upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ message: 'No file uploaded' });
 
-  const imageUrl = `/uploads/${req.file.filename}`;
+  // const imageUrl = `/uploads/${req.file.filename}`;
+  const baseUrl = 'https://res.cloudinary.com/duzg7qsjz/image/upload/';
+  const imagePath = 'v1759081342/vehicles/plhdfwwkk33jag0lngty.png';
+  const imageUrl = baseUrl + imagePath;
   res.json({ imageUrl });
 });
 
@@ -19,7 +22,7 @@ router.post("/image/cloudinary", protect, adminOnly, upload.single("image"), (re
   if (!req.file) return res.status(400).json({ message: "No file uploaded" });
   console.log('Uploaded file info:', req.file); // Debugging line
   console.log('Cloudinary URL:', req.file.path); // Debugging line
-  
+
   res.json({ imageUrl: req.file.path }); // Cloudinary ka URL
 });
 
