@@ -51,7 +51,7 @@ const ManageVehiclePage = () => {
               <div className="card shadow-sm" style={{ padding: '10px' }}>
                 {vehicle.image && (
                   <img
-                    src={`${URL}${vehicle.image}`}
+                    src={`${vehicle.image}`}
                     alt={vehicle.type}
                     className="card-img-top "
                     style={{ height: '180px', width: '100%', objectFit: 'contain', zoom: '1.2' }}
