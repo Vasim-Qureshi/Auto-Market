@@ -12,7 +12,7 @@ router.post('/image', protect, adminOnly, upload.single('image'), (req, res) => 
 
   // const imageUrl = `/uploads/${req.file.filename}`;
   const baseUrl = 'https://res.cloudinary.com/duzg7qsjz/image/upload/';
-  const imagePath = 'v1759081342/vehicles/plhdfwwkk33jag0lngty.png';
+  const imagePath = 'v1759081342/vehicles/' + req.file.filename; // Adjust based on your Cloudinary folder structure
   const imageUrl = baseUrl + imagePath;
   res.json({ imageUrl });
 });
