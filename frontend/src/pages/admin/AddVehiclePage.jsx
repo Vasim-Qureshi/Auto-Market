@@ -50,11 +50,11 @@ const AddVehiclePage = () => {
         },
       });
       setUploading(false);
-      console.log('Image uploaded successfully:', res.data.imageUrl); 
+      // console.log('Image uploaded successfully:', res.data.imageUrl); 
       return res.data.imageUrl;
     } catch (err) {
       setUploading(false);
-      console.error('Image upload failed:', err);
+      // console.error('Image upload failed:', err);
       alert('Image upload failed');
       return '';
     }
@@ -80,7 +80,7 @@ const AddVehiclePage = () => {
       alert('Vehicle added successfully!');
       navigate('/admin/manage-vehicles');
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       alert('Failed to add vehicle');
     }
   };

@@ -66,7 +66,7 @@ const EditVehiclePage = () => {
       return res.data.imageUrl;
     } catch (err) {
       setUploading(false);
-      console.error('Image upload failed:', err);
+      // console.error('Image upload failed:', err);
       alert('Image upload failed');
       return formData.image;
     }
@@ -88,7 +88,7 @@ const EditVehiclePage = () => {
       alert('Vehicle updated successfully');
       navigate('/admin/manage-vehicles');
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       alert('Failed to update vehicle');
     }
   };
