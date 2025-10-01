@@ -5,31 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import URL from "../services/api"; // Adjust the import path as necessary
-/*
-const vehicles = Array.from({ length: 10 }, (_, i) => ({
-    id: i + 1,
-    category: "Truck",
-    image: "http://images3.alphacoders.com/281/281477.jpg", // main image
-    moreImages: [
-        "http://images3.alphacoders.com/281/281477.jpg",
-        "http://images3.alphacoders.com/281/281477.jpg",
-        "http://images3.alphacoders.com/281/281477.jpg",
-        "http://images3.alphacoders.com/281/281477.jpg",
-        "http://images3.alphacoders.com/281/281477.jpg",
-        "http://images3.alphacoders.com/281/281477.jpg",
-        "http://images3.alphacoders.com/281/281477.jpg",
-        "http://images3.alphacoders.com/281/281477.jpg",
-        "http://images3.alphacoders.com/281/281477.jpg",
-    ], // extra images
-    name: `Truck Model ${i + 1}`,
-    price: `$${(i + 1) * 5000}`,
-    description: "Well maintained, powerful engine, good mileage.",
-    seller: {
-        name: `Seller ${i + 1}`,
-        contact: `+91-98765${i}432${i}`,
-    },
-}));
-*/
+
 const SellingVehicleDetails = () => {
     const navigate = useNavigate();
     const [vehicles, setVehicles] = useState([]);
@@ -41,9 +17,9 @@ const SellingVehicleDetails = () => {
             try {
                 const res = await axios.get(`${URL}/api/vehicles/category/${type}`);
                 setVehicles(res.data);
-                console.log('Vehicles loaded:', res.data);
+                // console.log('Vehicles loaded:', res.data);
             } catch (err) {
-                console.error('Error loading vehicles:', err);
+                // console.error('Error loading vehicles:', err);
             } finally {
                 setLoading(false);
             }
@@ -51,7 +27,6 @@ const SellingVehicleDetails = () => {
 
         fetchVehicles();
     }, [type]);
-
 
 
     const handleContactClick = (vehicle) => {
@@ -65,7 +40,7 @@ const SellingVehicleDetails = () => {
                 <div key={vehicle.id} className="card mb-4 shadow-sm">
                     <div className="card-body">
                         {/* First Row */}
-                        <div className="row align-items-center mb-3">
+                        <div className="row align-items-center mb-3 border-bottom pb-3">
                             {/* Vehicle Image */}
                             <div className="col-md-3 text-center">
                                 <img
@@ -82,32 +57,50 @@ const SellingVehicleDetails = () => {
                                     <strong>Category:</strong> {vehicle.category}
                                 </p>
                                 <p className="mb-1">
+                                    <strong>Make:</strong> {vehicle.make}
+                                </p>
+                                <p className="mb-1">
+                                    <strong>Model:</strong> {vehicle.model}
+                                </p>
+                                <p className="mb-1">
+                                    <strong>Year:</strong> {vehicle.year}
+                                </p>
+                                <p className="mb-1">
                                     <strong>Price:</strong> {vehicle.price}
                                 </p>
-                                <p className="text-muted small">{vehicle.description}</p>
+                                <p className="mb-1 text-muted small">{vehicle.description}</p>
+                                <button className="btn btn-link">more details</button>
                             </div>
 
                             {/* Seller Details */}
                             <div className="col-md-3">
                                 <h6>Seller Info</h6>
                                 <p className="mb-1">
+                                    <strong>Name:</strong> Seller Name
                                     {/* <strong>Name:</strong> {vehicle.seller.name} */}
                                 </p>
                                 <p className="mb-1">
+                                    <strong>Location:</strong> Seller Location
+                                    {/* <strong>Location:</strong> {vehicle.seller.location} */}
+                                </p>
+                                <p className="mb-1">
+                                    <strong>Contact:</strong> +91-9876543210
                                     {/* <strong>Contact:</strong> {vehicle.seller.contact} */}
                                 </p>
+                                <button className="btn btn-link">more details</button>
                             </div>
 
-                            {/* Action Buttons */}
+                            {/* Action Buttons 
                             <div className="col-md-3 text-center">
                                 <button className="btn btn-warning me-2">Edit</button>
                                 <button className="btn btn-danger">Delete</button>
-                            </div>
+                            </div> 
+                            */}
                         </div>
 
                         {/* Extra Images Row */}
                         <div className="row mb-3">
-                           {/* <div className="col text-center">
+                            {/* <div className="col text-center">
                                 {vehicle.moreImages.map((img, index) => (
                                     <img
                                         key={index}
