@@ -19,7 +19,9 @@ export const getAllVehicles = async (req, res) => {
 export const getVehiclesByCategory = async (req, res) => {
   try {
     const { type } = req.params;
-    const vehicles = await Vehicle.find({ category: type.toLowerCase() });
+    console.log(`Fetching vehicles for category: ${type}`);
+
+    const vehicles = await Vehicle.find({ type: type.toLowerCase() });
     res.json(vehicles);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch vehicles by category' });
