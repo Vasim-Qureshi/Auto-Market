@@ -34,8 +34,8 @@ const SellingVehicleDetails = () => {
         navigate("/buyerproposal");
     };
     return (
-        <div className="container my-4" style={{ maxWidth: "900px", maxHeight: "90vh", overflowY: "auto", padding: "35px", paddingBottom: "60px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
-            <h2 className="text-center mb-4">Available {type.charAt(0).toUpperCase() + type.slice(1)} for Sale</h2>
+        <div className="container my-4" style={{ maxWidth: "1200px", maxHeight: "90vh", overflowY: "auto", padding: "35px 5px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
+            <h2 className="text-center mb-4">Available {type.charAt(0).toUpperCase() + type.slice(1)}s for Sale</h2>
             {vehicles.map((vehicle) => (
                 <div key={vehicle.id} className="card mb-4 shadow-sm">
                     <div className="card-body">
