@@ -58,7 +58,7 @@ const ManageVehiclePage = () => {
                   />
                 )}
                 <div className="card-body">
-                  <h5 className="card-title">{vehicle.type}</h5>
+                  <h5 className="card-title">{vehicle.type.charAt(0).toUpperCase() + vehicle.type.slice(1)}</h5>
                   <p className="card-text">
                     <strong>Make:</strong> {vehicle.make}<br />
                     <strong>Model:</strong> {vehicle.model}<br />

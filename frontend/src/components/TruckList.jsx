@@ -35,7 +35,7 @@ const SellingVehicleDetails = () => {
     };
     return (
         <div className="container my-4" style={{ maxWidth: "900px", maxHeight: "90vh", overflowY: "auto", padding: "35px", paddingBottom: "60px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
-            <h2 className="text-center mb-4">Available Trucks for Sale</h2>
+            <h2 className="text-center mb-4">Available {type.charAt(0).toUpperCase() + type.slice(1)} for Sale</h2>
             {vehicles.map((vehicle) => (
                 <div key={vehicle.id} className="card mb-4 shadow-sm">
                     <div className="card-body">
@@ -84,7 +84,7 @@ const SellingVehicleDetails = () => {
                                     {/* <strong>Location:</strong> {vehicle.seller.location} */}
                                 </p>
                                 <p className="mb-1">
-                                    <strong>Contact:</strong> +91-9876543210
+                                    <strong>Contact:</strong> +91 9999999999
                                     {/* <strong>Contact:</strong> {vehicle.seller.contact} */}
                                 </p>
                                 <button className="btn btn-link">more details</button>

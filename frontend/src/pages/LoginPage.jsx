@@ -32,7 +32,7 @@ const LoginPage = () => {
           withCredentials: true,
         });
       // After login success:
-      localStorage.setItem('token', res.data.token);
+      // localStorage.setItem('token', res.data.token);
       login(res.data.token); // Update context with user data
       setMessage('Login successful');
       navigate('/');

@@ -13,8 +13,9 @@ export const searchVehicles = async (req, res) => {
 
     const results = await Vehicle.find({
       $or: [
-        { title: { $regex: regex } },
-        { brand: { $regex: regex } },
+        { type: { $regex: regex } },
+        { make: { $regex: regex } },
+        { model: { $regex: regex } },
         { category: { $regex: regex } },
         { location: { $regex: regex } },
       ],
