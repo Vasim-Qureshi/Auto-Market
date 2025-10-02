@@ -18,9 +18,11 @@ const HomePage = () => {
       <div className="row">
         {categories.map((cat) => (
           <div className="col-md-4 mb-4" key={cat.type}>
-            <div className="card h-100">
-              <img src={cat.image} className="card-img-center h-100" alt={cat.name} />
-              <div className="card-body text-center">
+            <div className="card text-center h-100" style={{ padding: '5px' }}>
+              <div className='card-body'>
+                <img src={cat.image} className="card-img-top" alt={cat.name} />
+              </div>
+              <div className="card-footer">
                 <h5 className="card-title">{cat.name}</h5>
                 <Link to={`/${cat.type}`} className="btn btn-primary">
                   Browse {cat.name}

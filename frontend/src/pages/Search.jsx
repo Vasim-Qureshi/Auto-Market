@@ -106,11 +106,11 @@ const Search = () => {
                   variant="top"
                   src={vehicle.image || "https://via.placeholder.com/300x180"}
                   alt={vehicle.title}
-                  style={{ height: "200px", objectFit: "cover" }}
+                  style={{ height: "200px", objectFit: "contain" }}
                 />
                 <Card.Body>
                   <Card.Title className="fw-bold text-dark">
-                    {vehicle.title || `${vehicle.make} ${vehicle.model}`}
+                    {vehicle.type || `${vehicle.make} ${vehicle.model}`}
                   </Card.Title>
                   <Card.Text className="text-muted small">
                     <strong>Type:</strong> {vehicle.type} <br />
