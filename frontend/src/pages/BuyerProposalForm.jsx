@@ -115,7 +115,7 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
   }
 
   return (
-    <div className="card shadow-sm mb-4" style={{ maxHeight: "90vh", overflowY: "auto", padding: '60px' }}>
+    <div className="card shadow-sm mb-4" style={{ maxHeight: "90vh", overflowY: "auto", padding: '55px 5px' }}>
       <div className="card-body">
         <h5 className="card-title mb-3">Contact / Buyer Proposal</h5>
 
