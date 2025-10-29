@@ -26,6 +26,7 @@ import Search from "./pages/Search";
 import PrivacyPolicy from './pages/legalDocs/PrivacyPolicy';
 import TermAndCondition from './pages/legalDocs/Term&Condition';
 import RefundPolicy from './pages/legalDocs/RefundPolicy';
+import SellerDashboard from './pages/seller/SellerDashboard';
 
 function App() {
   return (
@@ -44,6 +45,9 @@ function App() {
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />
         <Route path="/terms-and-conditions" element={<TermAndCondition />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
+
+        {/* Seller Routes*/}
+        <Route path="/seller/dashboard" element={<SellerDashboard />} />
 
         {/* Password Management Routes */}
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />

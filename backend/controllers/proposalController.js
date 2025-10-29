@@ -27,3 +27,13 @@ export const createProposal = async (req, res) => {
     });
   }
 };
+
+export const getProposals = async (req, res) => {
+  try {
+    const proposals = await Proposal.find().sort({ createdAt: -1 });
+    res.status(200).json(proposals);
+  } catch (error) {
+    console.error("Error fetching proposals:", error);
+    res.status(500).json({ message: "Error fetching proposals" });
+  }
+}
