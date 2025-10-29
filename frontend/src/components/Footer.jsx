@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => (
-  <footer className="fixed-bottom bg-dark text-light text-center py-3">
+  <footer className="fixed-bottom bg-dark text-light text-center" style={{height: "110px"}}>
     <div className="container">
       <div className="mb-2">
         <a href="https://facebook.com" className="text-light mx-2">Facebook</a>

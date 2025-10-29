@@ -30,14 +30,17 @@ const SellingVehicleDetails = () => {
 
 
     const handleContactClick = (vehicle) => {
+        console.log("Selected Vehicle ID:", vehicle._id); // 👈 yahan sirf selected vehicle ki id milegi
         // Navigate to BuyerProposalForm with vehicle details
-        navigate("/buyerproposal");
+        navigate(`/vehicle/${vehicle._id}`)
+        // navigate("/buyerproposal", { state: { vehicleId: vehicle._id } });
     };
+
     return (
         <div className="container my-4" style={{ maxWidth: "1200px", maxHeight: "90vh", overflowY: "auto", padding: "55px 5px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
             <h2 className="text-center mb-4">Available {type.charAt(0).toUpperCase() + type.slice(1)}s for Sale</h2>
             {vehicles.map((vehicle) => (
-                <div key={vehicle.id} className="card mb-4 shadow-sm">
+                <div key={vehicle._id} className="card mb-4 shadow-sm">
                     <div className="card-body">
                         {/* First Row */}
                         <div className="row align-items-center mb-3 border-bottom pb-3">
@@ -116,7 +119,7 @@ const SellingVehicleDetails = () => {
                         {/* Contact for Buy Row */}
                         <div className="row">
                             <div className="col text-center">
-                                <button onClick={(vehicle) => handleContactClick(vehicle)} className="btn btn-success w-50">
+                                <button onClick={() => handleContactClick(vehicle)} className="btn btn-success w-50">
                                     Contact for Buy
                                 </button>
                             </div>

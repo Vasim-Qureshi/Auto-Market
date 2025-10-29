@@ -49,7 +49,7 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="container p-4 my-5" style={{ paddingBottom: "100px", maxWidth: "900px", maxHeight: "80vh", overflowY: "auto" }}>
+    <div className="container" style={{ padding:"100px, 0, 150px, 0", maxWidth: "1500px", maxHeight: "120vh" }}>
       <h2 className="text-center fw-bold mb-5">👤 My Profile</h2>
 
       {user ? (

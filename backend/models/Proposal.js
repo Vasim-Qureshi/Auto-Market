@@ -9,7 +9,7 @@ const proposalSchema = new mongoose.Schema(
       },
       type: {
         type: String,
-        enum: ["Car", "Truck", "Bike", "Bus", "SUV", "Other"],
+        enum: ["car", "truck", "bike","minibus", "bus", "Other"],
         required: true,
       },
       make: {

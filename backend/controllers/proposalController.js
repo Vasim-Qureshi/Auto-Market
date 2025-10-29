@@ -1,13 +1,29 @@
 import Proposal from "../models/Proposal.js";
-export const createProposal = (req, res) => {
+
+export const createProposal = async (req, res) => {
+  try {
     const { vehicle, buyer, offer } = req.body;
-    // Logic to handle proposal would go here
-    const newProposal = new Proposal({
-        vehicle,
-        buyer,
-        offer
+
+    if (!vehicle || !buyer || !offer) {
+      return res.status(400).json({ message: "All fields (vehicle, buyer, offer) are required" });
+    }
+
+    console.log("Creating proposal with:", { vehicle, buyer, offer });
+
+    const newProposal = await Proposal.create({
+      vehicle,
+      buyer,
+      offer,
     });
-    newProposal.save()
-        .then(proposal => res.status(201).json(proposal))
-        .catch(err => res.status(500).json({ error: err.message }));
+
+    console.log("Proposal created successfully:", newProposal);
+
+    res.status(201).json(newProposal);
+  } catch (error) {
+    console.error("Error creating proposal:", error);
+    res.status(500).json({
+      message: "Failed to create proposal",
+      error: error.message,
+    });
+  }
 };

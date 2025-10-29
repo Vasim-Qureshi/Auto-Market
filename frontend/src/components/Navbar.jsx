@@ -29,7 +29,7 @@ const Navbar = () => {
         <span className="navbar-toggler-icon" />
       </button>
 
-      <div className="collapse navbar-collapse" id="navbarNav">
+      <div className="collapse navbar-collapse mt-4" id="navbarNav">
         {/* Search Bar */}
         <form className="d-flex ms-auto me-3">
           <input

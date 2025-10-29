@@ -37,12 +37,8 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/:type" element={<ProtectedRoute>{<TruckList />}</ProtectedRoute>} />
-        <Route path="/buyerproposal" element={<ProtectedRoute>{<BuyerProposalForm />}</ProtectedRoute>} />
-        {/* <Route path="/:type/:brand/:model" element={<ProtectedRoute>{<VehicleSubCategoryPage />}</ProtectedRoute>} /> */}
+        <Route path="/buyerproposal/:vehicleId" element={<ProtectedRoute>{<BuyerProposalForm />}</ProtectedRoute>} />
         <Route path="/vehicle/:id" element={<ProtectedRoute>{<VehicleDetailsPage />}</ProtectedRoute>} />
-        {/* <Route path="/cart" element={<ProtectedRoute>{<CartPage />}</ProtectedRoute>} /> */}
-        {/* <Route path="/checkout" element={<ProtectedRoute>{<CheckoutPage />}</ProtectedRoute>} /> */}
-        {/* <Route path="/orders" element={<ProtectedRoute>{<OrderDetailsPage />}</ProtectedRoute>} /> */}
         <Route path="/profile" element={<ProtectedRoute>{<ProfilePage />}</ProtectedRoute>} />
         <Route path="/search" element={<ProtectedRoute>{<Search />}</ProtectedRoute>} />
         <Route path="/privacy-policy" element={<PrivacyPolicy />} />

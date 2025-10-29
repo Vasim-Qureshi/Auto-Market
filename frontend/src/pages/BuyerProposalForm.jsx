@@ -1,14 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import URL from "../services/api";
+import axios from "axios";
+import { useParams, useLocation } from 'react-router-dom';
 
-// ContactBuyerProposalForm.jsx
-// Usage notes:
-// 1) In your Vite React project's index.html add Bootstrap CSS (via CDN or install):
-//    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-// 2) Place this file under src/components/ and import it where needed: import ContactBuyerProposalForm from './components/ContactBuyerProposalForm';
-// 3) Wire the submit handler to your backend endpoint (currently it logs and downloads JSON as demo).
-
-function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/281/281477.jpg", id: "126", type: "Truck", make: "DAF", model: "XF", year: "2020", price: "2500000" } }) {
+function BuyerProposalForm() {
+  const [user, setUser] = useState({ name: "", email: "", phone: "" });
   // vehicle prop (optional) can contain: { id, title, make, model, year, price, image }
   const [form, setForm] = useState({
     fullName: "",
@@ -23,16 +19,42 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
     acceptTerms: false,
   });
 
-
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
+  const [vehicle, setVehicle] = useState({});
+
+  const { vehicleId } = useParams(); // Get vehicleId from URL params
+
+  useEffect(() => {
+    const fetchVehicle = async () => {
+      try {
+        const vehicleRes = await axios.get(`${URL}/api/vehicles/${vehicleId}`);
+        setVehicle(vehicleRes.data);
+        const token = localStorage.getItem("token");
+        if (token) {
+          const res = await axios.get(`${URL}/api/auth/profile`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setUser(res.data);
+          console.log("Fetched user data:", res.data);
+
+        } else {
+          setUser(null);
+        }
+      } catch (err) {
+        console.error('Error fetching vehicle:', err);
+      }
+    };
+    fetchVehicle();
+  }, [vehicleId]);
+
 
   function validate() {
     const e = {};
-    if (!form.fullName.trim()) e.fullName = "Full name is required.";
-    if (!form.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = "Enter a valid email.";
-    if (!form.phone.match(/^\+?[0-9\-\s]{7,15}$/)) e.phone = "Enter a valid phone number.";
+    if (!user?.name?.trim()) e.fullName = "Full name is required.";
+    if (!user?.email?.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) e.email = "Enter a valid email.";
+    if (!String(user?.phone || '').match(/^\+?[0-9]{10,15}$/)) e.phone = "Enter a valid phone number.";
     if (!form.offer || Number(form.offer) <= 0) e.offer = "Please enter your offer amount.";
     if (!form.acceptTerms) e.acceptTerms = "You must accept terms to proceed.";
     return e;
@@ -55,52 +77,43 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
       // Demo behaviour: prepare payload and trigger a download of JSON.
       const payload = {
         vehicle: {
-          id: vehicle.id || "unknown",
+          id: vehicleId || "unknown",
           type: vehicle.type || "unknown",
           make: vehicle.make || "unknown",
           model: vehicle.model || "unknown",
           image: vehicle.image || "unknown",
-          year: vehicle.year || "unknown",
-          price: vehicle.price || "unknown",
+          year: Number(vehicle.year) || "unknown",
+          price: Number(vehicle.price) || "unknown",
         },
         buyer: {
-          fullName: form.fullName,
-          email: form.email,
-          phone: form.phone,
+          fullName: user.name,
+          email: user.email,
+          phone: String(user.phone),
           city: form.city,
           preferredContact: form.preferredContact,
           contactTime: form.contactTime,
         },
         offer: {
-          budget: form.budget,
-          offerAmount: form.offer,
+          budget: Number(form.budget),
+          offerAmount: Number(form.offer),
           message: form.message,
-          when: new Date().toISOString(),
+          when: new Date(),
         },
       };
+      console.log("Submitting proposal:", payload);
+
 
       // TODO: replace this with your real API call, e.g.:
-      await fetch(`${URL}/api/proposal`,
+      const proposalRes = await fetch(`${URL}/api/proposal`,
         {
           method: 'POST',
           body: JSON.stringify(payload),
           headers: { 'Content-Type': 'application/json' }
         })
-      /*
-            // make JSON download for demo
-            const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement("a");
-            a.href = url;
-            a.download = `vehicle-proposal-${vehicle.id || "unknown"}.json`;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-            URL.revokeObjectURL(url);
-      
-            setSuccessMsg("Proposal submitted — demo JSON downloaded. Replace demo code with real API call in src/components/ContactBuyerProposalForm.jsx");
-      */
-      setSuccessMsg("Proposal submitted successfully. The seller will contact you soon.");
+        if (proposalRes.status===201) {
+                setSuccessMsg("Proposal submitted successfully. The seller will contact you soon.");
+        }
+
       setForm((s) => ({
         ...s,
         offer: "",
@@ -115,7 +128,7 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
   }
 
   return (
-    <div className="card shadow-sm mb-4" style={{ maxHeight: "90vh", overflowY: "auto", padding: '55px 5px' }}>
+    <div className="card shadow-sm mb-4" style={{ maxHeight: "90vh", overflowY: "auto", padding: '65px 5px' }}>
       <div className="card-body">
         <h5 className="card-title mb-3">Contact / Buyer Proposal</h5>
 
@@ -137,7 +150,7 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
                   <h6>{`${vehicle.make || ""} ${vehicle.model || ""}`}</h6>
                   <p className="small text-muted mb-1">Year: {vehicle.year || "—"}</p>
                   <p className="small text-muted mb-1">Listed price: {vehicle.price ? `₹ ${vehicle.price}` : "—"}</p>
-                  <p className="small text-muted">Vehicle ID: {vehicle.id || "—"}</p>
+                  <p className="small text-muted">Vehicle ID: {vehicleId || "—"}</p>
                 </div>
               </div>
             </div>
@@ -151,7 +164,7 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
                   <label className="form-label">Full name</label>
                   <input
                     name="fullName"
-                    value={form.fullName}
+                    value={user.name}
                     onChange={handleChange}
                     className={`form-control ${errors.fullName ? "is-invalid" : ""}`}
                     placeholder="e.g. Rahul Sharma"
@@ -161,13 +174,13 @@ function BuyerProposalForm({ vehicle = { image: "http://images3.alphacoders.com/
 
                 <div className="col-md-6">
                   <label className="form-label">Email</label>
-                  <input name="email" value={form.email} onChange={handleChange} className={`form-control ${errors.email ? "is-invalid" : ""}`} placeholder="name@example.com" />
+                  <input name="email" value={user.email} onChange={handleChange} className={`form-control ${errors.email ? "is-invalid" : ""}`} placeholder="name@example.com" />
                   <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 <div className="col-md-6">
                   <label className="form-label">Phone</label>
-                  <input name="phone" value={form.phone} onChange={handleChange} className={`form-control ${errors.phone ? "is-invalid" : ""}`} placeholder="+91 98765 43210" />
+                  <input name="phone" value={user.phone} onChange={handleChange} className={`form-control ${errors.phone ? "is-invalid" : ""}`} placeholder="+91 98765 43210" />
                   <div className="invalid-feedback">{errors.phone}</div>
                 </div>
 

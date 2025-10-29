@@ -1,11 +1,12 @@
 // File: pages/VehicleDetailsPage.jsx
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import URL from '../services/api';
 
 const VehicleDetailsPage = () => {
   const { id } = useParams(); // vehicle ID from route
+  const navigate = useNavigate();
   const [vehicle, setVehicle] = useState(null);
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState('');
@@ -46,11 +47,11 @@ const VehicleDetailsPage = () => {
   if (!vehicle) return <div className="container mt-4">Loading vehicle details...</div>;
 
   return (
-    <div className="container mt-4" style={{ maxWidth: '900px', minHeight: '80vh', overflowY: 'auto', padding: '60px' }}>
+    <div className="container mt-4 " style={{ maxWidth: '900px', minHeight: '80vh', overflowY: 'auto', padding: '100px 15px 120px 15px'}}>
       <div className="row">
         <div className="col-md-6">
           <img
-            src={`${URL}${vehicle.image}`}
+            src={vehicle.image}
             alt={vehicle.title}
             className="img-fluid"
           />
@@ -64,8 +65,8 @@ const VehicleDetailsPage = () => {
           <p><strong>Location:</strong> {vehicle.location}</p>
           <p><strong>Description:</strong> {vehicle.description}</p>
           <h4 className="mt-4">Price: ₹{vehicle.price?.toLocaleString("en-IN")}</h4>
-          <button className="btn btn-primary" onClick={handleAddToCart}>
-            Give Proposal
+          <button className="btn btn-primary" onClick={() => navigate(`/buyerproposal/${vehicle._id}`)}>
+            Contact to Buy
           </button>
           {message && <div className="mt-2 alert alert-info">{message}</div>}
         </div>
