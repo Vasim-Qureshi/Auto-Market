@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import URL from "../../services/api";
 
 const SellerDashboard = () => {
   const [proposals, setProposals] = useState([]);
@@ -9,7 +10,7 @@ const SellerDashboard = () => {
   useEffect(() => {
     const fetchProposals = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/proposal");
+        const response = await axios.get(`${URL}/api/proposal`);
         setProposals(response.data);
       } catch (error) {
         console.error("Error fetching proposals:", error);
