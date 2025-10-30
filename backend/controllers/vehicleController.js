@@ -21,7 +21,7 @@ export const getVehiclesByCategory = async (req, res) => {
     const { type } = req.params;
     console.log(`Fetching vehicles for category: ${type}`);
 
-    const vehicles = await Vehicle.find({ type: type.toLowerCase() });
+    const vehicles = await Vehicle.find({ type: type.toLowerCase() }).populate('ownerId', "name email phone");
     res.json(vehicles);
   } catch (err) {
     res.status(500).json({ message: 'Failed to fetch vehicles by category' });

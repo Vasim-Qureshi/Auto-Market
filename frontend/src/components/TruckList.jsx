@@ -17,7 +17,7 @@ const SellingVehicleDetails = () => {
             try {
                 const res = await axios.get(`${URL}/api/vehicles/category/${type}`);
                 setVehicles(res.data);
-                // console.log('Vehicles loaded:', res.data);
+                console.log('Vehicles loaded:', res.data);
             } catch (err) {
                 // console.error('Error loading vehicles:', err);
             } finally {
@@ -37,7 +37,7 @@ const SellingVehicleDetails = () => {
     };
 
     return (
-        <div className="container my-4" style={{ maxWidth: "1200px", maxHeight: "90vh", overflowY: "auto", padding: "55px 5px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
+        <div className="container my-4" style={{ padding: "55px 20px 100px 20px", border: "1px solid #ddd", borderRadius: "8px", backgroundColor: "#f9f9f9" }}>
             <h2 className="text-center mb-4">Available {type.charAt(0).toUpperCase() + type.slice(1)}s for Sale</h2>
             {vehicles.map((vehicle) => (
                 <div key={vehicle._id} className="card mb-4 shadow-sm">
@@ -79,16 +79,16 @@ const SellingVehicleDetails = () => {
                             <div className="col-md-3">
                                 <h6>Seller Info</h6>
                                 <p className="mb-1">
-                                    <strong>Name:</strong> Seller Name
-                                    {/* <strong>Name:</strong> {vehicle.seller.name} */}
+                                    {/* <strong>Name:</strong> Seller Name */}
+                                    <strong>Name:</strong> {vehicle.ownerId?.name}
                                 </p>
                                 <p className="mb-1">
                                     <strong>Location:</strong> Seller Location
                                     {/* <strong>Location:</strong> {vehicle.seller.location} */}
                                 </p>
                                 <p className="mb-1">
-                                    <strong>Contact:</strong> +91 9999999999
-                                    {/* <strong>Contact:</strong> {vehicle.seller.contact} */}
+                                    {/* <strong>Contact:</strong> +91 9999999999 */}
+                                    <strong>Contact:</strong> {vehicle.ownerId?.phone}
                                 </p>
                                 <button className="btn btn-link">more details</button>
                             </div>
