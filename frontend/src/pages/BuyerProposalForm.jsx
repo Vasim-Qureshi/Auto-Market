@@ -31,6 +31,8 @@ function BuyerProposalForm() {
       try {
         const vehicleRes = await axios.get(`${URL}/api/vehicles/${vehicleId}`);
         setVehicle(vehicleRes.data);
+        console.log(vehicleRes.data);
+
         const token = localStorage.getItem("token");
         if (token) {
           const res = await axios.get(`${URL}/api/auth/profile`, {
@@ -49,6 +51,7 @@ function BuyerProposalForm() {
     fetchVehicle();
   }, [vehicleId]);
 
+  // console.log(vehicle);
 
   function validate() {
     const e = {};
@@ -99,8 +102,13 @@ function BuyerProposalForm() {
           message: form.message,
           when: new Date(),
         },
+        seller: {
+          name: vehicle.ownerId.name,
+          phone: vehicle.ownerId.phone,
+          email: vehicle.ownerId.email,
+        }
       };
-      console.log("Submitting proposal:", payload);
+      // console.log("Submitting proposal:", payload);
 
 
       // TODO: replace this with your real API call, e.g.:
@@ -110,9 +118,9 @@ function BuyerProposalForm() {
           body: JSON.stringify(payload),
           headers: { 'Content-Type': 'application/json' }
         })
-        if (proposalRes.status===201) {
-                setSuccessMsg("Proposal submitted successfully. The seller will contact you soon.");
-        }
+      if (proposalRes.status === 201) {
+        setSuccessMsg("Proposal submitted successfully. The seller will contact you soon.");
+      }
 
       setForm((s) => ({
         ...s,

@@ -19,7 +19,7 @@ export const getAllVehicles = async (req, res) => {
 export const getVehiclesByCategory = async (req, res) => {
   try {
     const { type } = req.params;
-    console.log(`Fetching vehicles for category: ${type}`);
+    // console.log(`Fetching vehicles for category: ${type}`);
 
     const vehicles = await Vehicle.find({ type: type.toLowerCase() }).populate('ownerId', "name email phone");
     res.json(vehicles);
@@ -42,7 +42,7 @@ export const getVehiclesBySubcategory = async (req, res) => {
 // Get Vehicle Details
 export const getVehicleDetails = async (req, res) => {
   try {
-    const vehicle = await Vehicle.findById(req.params.id);
+    const vehicle = await Vehicle.findById(req.params.id).populate('ownerId', "name email phone");
     if (!vehicle) return res.status(404).json({ message: 'Vehicle not found' });
     res.json(vehicle);
   } catch (err) {
