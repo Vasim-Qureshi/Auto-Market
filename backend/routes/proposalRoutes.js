@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createProposal, getProposals } from '../controllers/proposalController.js';
+import { createProposal, getProposals, getProposalsByEmail } from '../controllers/proposalController.js';
 
 const router = Router();
 
@@ -8,6 +8,7 @@ router.post('/', createProposal);
 
 // ✅ GET all proposals
 router.get("/", getProposals);
+router.get("/filter", getProposalsByEmail);
 
 
 export default router;

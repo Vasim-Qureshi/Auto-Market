@@ -38,3 +38,15 @@ export const getProposals = async (req, res) => {
     res.status(500).json({ message: "Error fetching proposals" });
   }
 }
+
+export const getProposalsByEmail = async (req, res) => {
+  try {
+    const { buyerEmail } = req.query;
+    const filter = buyerEmail ? { "buyer.email": buyerEmail } : {};
+    const proposals = await Proposal.find(filter).sort({ createdAt: -1 });
+    res.status(200).json(proposals);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error fetching proposals" });
+  }
+};

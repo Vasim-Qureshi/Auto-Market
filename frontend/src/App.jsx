@@ -27,6 +27,7 @@ import PrivacyPolicy from './pages/legalDocs/PrivacyPolicy';
 import TermAndCondition from './pages/legalDocs/Term&Condition';
 import RefundPolicy from './pages/legalDocs/RefundPolicy';
 import SellerDashboard from './pages/seller/SellerDashboard';
+import BuyerDashboard from './pages/buyer/BuyerDashboard';
 
 function App() {
   return (
@@ -48,6 +49,10 @@ function App() {
 
         {/* Seller Routes*/}
         <Route path="/seller/dashboard" element={<SellerDashboard />} />
+
+        {/* Buyer Routes*/}
+        <Route path="/buyer/dashboard" element={<BuyerDashboard />} />
+
 
         {/* Password Management Routes */}
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
