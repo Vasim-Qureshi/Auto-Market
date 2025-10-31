@@ -9,15 +9,15 @@ import {
   updateVehicle,
   deleteVehicle,
 } from '../controllers/vehicleController.js';
-import { protect, adminOnly } from '../middleware/authMiddleware.js';
+import { protect, adminOnly, buyerOnly } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
 router.get('/', getAllVehicles);
 // router.get('/:id', getVehicleById);
-router.get('/category/:type', getVehiclesByCategory);
+router.get('/category/:type', protect, buyerOnly, getVehiclesByCategory);
 router.get('/subcategory/:subtype', getVehiclesBySubcategory);
-router.get('/:id', getVehicleDetails); // must be last
+router.get('/:id', protect, buyerOnly, getVehicleDetails); // must be last
 
 // Admin Routes
 router.post('/', protect, adminOnly, createVehicle);

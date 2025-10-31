@@ -14,7 +14,10 @@ const VehicleDetailsPage = () => {
   useEffect(() => {
     const fetchVehicle = async () => {
       try {
-        const vehicleRes = await axios.get(`${URL}/api/vehicles/${id}`);
+        const token = localStorage.getItem('token');
+        const vehicleRes = await axios.get(`${URL}/api/vehicles/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setVehicle(vehicleRes.data);
         const userId = localStorage.getItem('userId');
         if (userId) {

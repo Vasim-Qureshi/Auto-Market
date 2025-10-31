@@ -19,3 +19,13 @@ export const adminOnly = (req, res, next) => {
   if (req.user.role !== 'admin') return res.status(403).json({ message: 'Admin access only' });
   next();
 };
+
+export const buyerOnly = (req, res, next) => {
+  if (req.user.role !== 'buyer') return res.status(403).json({ message: 'buyer access only' });
+  next();
+};
+
+export const sellerOnly = (req, res, next) => {
+  if (req.user.role !== 'seller') return res.status(403).json({ message: 'seller access only' });
+  next();
+};

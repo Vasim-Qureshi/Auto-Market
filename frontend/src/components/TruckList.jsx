@@ -15,7 +15,10 @@ const SellingVehicleDetails = () => {
     useEffect(() => {
         const fetchVehicles = async () => {
             try {
-                const res = await axios.get(`${URL}/api/vehicles/category/${type}`);
+                const token = localStorage.getItem('token');
+                const res = await axios.get(`${URL}/api/vehicles/category/${type}`, {
+                    headers: { Authorization: `Bearer ${token}` },
+                });
                 setVehicles(res.data);
                 console.log('Vehicles loaded:', res.data);
             } catch (err) {
