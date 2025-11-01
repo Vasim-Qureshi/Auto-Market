@@ -23,17 +23,18 @@ function BuyerProposalForm() {
   const [submitting, setSubmitting] = useState(false);
   const [successMsg, setSuccessMsg] = useState("");
   const [vehicle, setVehicle] = useState({});
-
+  const token = localStorage.getItem('token');
   const { vehicleId } = useParams(); // Get vehicleId from URL params
 
   useEffect(() => {
     const fetchVehicle = async () => {
       try {
-        const vehicleRes = await axios.get(`${URL}/api/vehicles/${vehicleId}`);
+        const vehicleRes = await axios.get(`${URL}/api/vehicles/${vehicleId}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setVehicle(vehicleRes.data);
         console.log(vehicleRes.data);
 
-        const token = localStorage.getItem("token");
         if (token) {
           const res = await axios.get(`${URL}/api/auth/profile`, {
             headers: { Authorization: `Bearer ${token}` },
@@ -116,7 +117,10 @@ function BuyerProposalForm() {
         {
           method: 'POST',
           body: JSON.stringify(payload),
-          headers: { 'Content-Type': 'application/json' }
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
         })
       if (proposalRes.status === 201) {
         setSuccessMsg("Proposal submitted successfully. The seller will contact you soon.");
@@ -174,7 +178,7 @@ function BuyerProposalForm() {
                     name="fullName"
                     value={user.name}
                     onChange={handleChange}
-                    className={`form-control ${errors.fullName ? "is-invalid" : ""}`}
+                    className={`form - control ${errors.fullName ? "is-invalid" : ""}`}
                     placeholder="e.g. Rahul Sharma"
                   />
                   <div className="invalid-feedback">{errors.fullName}</div>
@@ -182,13 +186,13 @@ function BuyerProposalForm() {
 
                 <div className="col-md-6">
                   <label className="form-label">Email</label>
-                  <input name="email" value={user.email} onChange={handleChange} className={`form-control ${errors.email ? "is-invalid" : ""}`} placeholder="name@example.com" />
+                  <input name="email" value={user.email} onChange={handleChange} className={`form - control ${errors.email ? "is-invalid" : ""}`} placeholder="name@example.com" />
                   <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 <div className="col-md-6">
                   <label className="form-label">Phone</label>
-                  <input name="phone" value={user.phone} onChange={handleChange} className={`form-control ${errors.phone ? "is-invalid" : ""}`} placeholder="+91 98765 43210" />
+                  <input name="phone" value={user.phone} onChange={handleChange} className={`form - control ${errors.phone ? "is-invalid" : ""}`} placeholder="+91 98765 43210" />
                   <div className="invalid-feedback">{errors.phone}</div>
                 </div>
 
@@ -220,7 +224,7 @@ function BuyerProposalForm() {
                   <label className="form-label">Offer amount</label>
                   <div className="input-group">
                     <span className="input-group-text">₹</span>
-                    <input name="offer" value={form.offer} onChange={handleChange} className={`form-control ${errors.offer ? "is-invalid" : ""}`} placeholder="Amount you offer" />
+                    <input name="offer" value={form.offer} onChange={handleChange} className={`form - control ${errors.offer ? "is-invalid" : ""}`} placeholder="Amount you offer" />
                     <div className="invalid-feedback">{errors.offer}</div>
                   </div>
                 </div>
@@ -232,7 +236,7 @@ function BuyerProposalForm() {
 
                 <div className="col-12">
                   <div className="form-check">
-                    <input name="acceptTerms" id="acceptTerms" checked={form.acceptTerms} onChange={handleChange} className={`form-check-input ${errors.acceptTerms ? "is-invalid" : ""}`} type="checkbox" />
+                    <input name="acceptTerms" id="acceptTerms" checked={form.acceptTerms} onChange={handleChange} className={`form - check - input ${errors.acceptTerms ? "is-invalid" : ""}`} type="checkbox" />
                     <label className="form-check-label" htmlFor="acceptTerms">
                       I confirm that the information provided is correct and I am genuinely interested in buying this vehicle.
                     </label>
