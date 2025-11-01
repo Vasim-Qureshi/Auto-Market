@@ -6,11 +6,8 @@ import URL from '../services/api.js'; // Adjust the import path as necessary
 import { useAuth } from '../hooks/useAuth';
 
 const LoginPage = () => {
-  
-  console.log(URL);
-  
+    
   const { login } = useAuth();
-
 
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -37,7 +34,7 @@ const LoginPage = () => {
       setMessage('Login successful');
       navigate('/');
     } catch (err) {
-      console.error('Login failed:', err);
+      // console.error('Login failed:', err);
       setMessage(err.response?.data?.message || 'Login failed');
     }
   };

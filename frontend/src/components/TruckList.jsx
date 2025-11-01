@@ -20,7 +20,7 @@ const SellingVehicleDetails = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setVehicles(res.data);
-                console.log('Vehicles loaded:', res.data);
+                // console.log('Vehicles loaded:', res.data);
             } catch (err) {
                 // console.error('Error loading vehicles:', err);
             } finally {
@@ -33,7 +33,6 @@ const SellingVehicleDetails = () => {
 
 
     const handleContactClick = (vehicle) => {
-        console.log("Selected Vehicle ID:", vehicle._id); // 👈 yahan sirf selected vehicle ki id milegi
         // Navigate to BuyerProposalForm with vehicle details
         navigate(`/vehicle/${vehicle._id}`)
         // navigate("/buyerproposal", { state: { vehicleId: vehicle._id } });

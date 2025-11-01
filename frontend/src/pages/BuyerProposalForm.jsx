@@ -33,20 +33,20 @@ function BuyerProposalForm() {
           headers: { Authorization: `Bearer ${token}` },
         });
         setVehicle(vehicleRes.data);
-        console.log(vehicleRes.data);
+        // console.log(vehicleRes.data);
 
         if (token) {
           const res = await axios.get(`${URL}/api/auth/profile`, {
             headers: { Authorization: `Bearer ${token}` },
           });
           setUser(res.data);
-          console.log("Fetched user data:", res.data);
+          // console.log("Fetched user data:", res.data);
 
         } else {
           setUser(null);
         }
       } catch (err) {
-        console.error('Error fetching vehicle:', err);
+        // console.error('Error fetching vehicle:', err);
       }
     };
     fetchVehicle();
@@ -132,7 +132,7 @@ function BuyerProposalForm() {
       }));
       setErrors({});
     } catch (err) {
-      console.error(err);
+      // console.error(err);
       setErrors({ submit: "Failed to submit. Check console for details." });
     } finally {
       setSubmitting(false);

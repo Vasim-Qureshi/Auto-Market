@@ -27,7 +27,7 @@ const VehicleDetailsPage = () => {
           setUser(null);
         }
       } catch (err) {
-        console.error('Error fetching vehicle:', err);
+        // console.error('Error fetching vehicle:', err);
       }
     };
     fetchVehicle();
