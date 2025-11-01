@@ -36,7 +36,7 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div className="container-fluid py-5 my-4">
+    <div className="container-fluid" style={{paddingTop:"100px"}}>
       <h3 className="mb-4">Admin Dashboard</h3>
 
       {/* Stats Cards */}
@@ -75,7 +75,7 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Admin Shortcuts */}
+      {/* Admin Shortcuts 
       <div className="row">
         <div className="col-md-4 mb-3">
           <Link to="/admin/add-vehicle" className="btn btn-outline-primary w-100 py-3">
@@ -99,6 +99,7 @@ const AdminDashboard = () => {
           </button>
         </div>
       </div>
+      */}
     </div>
   );
 };

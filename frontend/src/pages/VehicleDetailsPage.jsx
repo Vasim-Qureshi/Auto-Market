@@ -50,23 +50,23 @@ const VehicleDetailsPage = () => {
   if (!vehicle) return <div className="container mt-4">Loading vehicle details...</div>;
 
   return (
-    <div className="container mt-4 " style={{ maxWidth: '900px', minHeight: '80vh', overflowY: 'auto', padding: '100px 15px 120px 15px'}}>
+    <div className="container mt-4 " style={{ maxWidth: '900px', minHeight: '80vh', overflowY: 'auto', padding: '100px 15px 120px 15px' }}>
       <div className="row">
         <div className="col-md-6">
           <img
             src={vehicle.image}
-            alt={vehicle.title}
+            alt={vehicle.type}
             className="img-fluid"
           />
         </div>
         <div className="col-md-6">
-          <h2>{vehicle.type}</h2>
-          <p><strong>Make:</strong> {vehicle.make}</p>
-          <p><strong>Model:</strong> {vehicle.model}</p>
-          <p><strong>Fuel Type:</strong> {vehicle.fuelType}</p>
-          <p><strong>Year:</strong> {vehicle.year}</p>
-          <p><strong>Location:</strong> {vehicle.location}</p>
-          <p><strong>Description:</strong> {vehicle.description}</p>
+          <h2>{vehicle.type.toUpperCase()}</h2>
+            <li><strong>Make:</strong>{vehicle.make}</li>
+            <li><strong>Model:</strong>{vehicle.model}</li>
+            <li><strong>Fuel Type:</strong>{vehicle.fuelType}</li>
+            <li><strong>Year:</strong>{vehicle.year}</li>
+            <li><strong>Location:</strong>{vehicle.location}</li>
+            <li><strong>Description:</strong>{vehicle.description}</li>
           <h4 className="mt-4">Price: ₹{vehicle.price?.toLocaleString("en-IN")}</h4>
           <button className="btn btn-primary" onClick={() => navigate(`/buyerproposal/${vehicle._id}`)}>
             Contact to Buy

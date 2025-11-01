@@ -3,7 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => (
-  <footer className="fixed-bottom bg-dark text-light text-center" style={{height: "110px"}}>
+  <footer className="fixed-bottom bg-danger text-light text-center" style={{height: "95px", paddingTop:"5px"}}>
     <div className="container">
       <div className="mb-2">
         <a href="https://facebook.com" className="text-light mx-2">Facebook</a>
@@ -11,9 +11,9 @@ const Footer = () => (
         <a href="https://instagram.com" className="text-light mx-2">Instagram</a>
       </div>
       <div>
-        <Link to="/privacy-policy">Privacy Policy</Link> |
-        <Link to="/terms-and-conditions">Terms & Conditions</Link> |
-        <Link to="/refund-policy">Refund Policy</Link>
+        <Link className='text-light m-2' to="/privacy-policy">Privacy Policy</Link> |
+        <Link className='text-light m-2' to="/terms-and-conditions">Terms & Conditions</Link> |
+        <Link className='text-light m-2' to="/refund-policy">Refund Policy</Link>
       </div>
       <div className="mt-2">
       &copy; {new Date().getFullYear()} UsedVehicles. All rights reserved.

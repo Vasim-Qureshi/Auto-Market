@@ -173,7 +173,7 @@ function BuyerProposalForm() {
             <form onSubmit={handleSubmit} noValidate>
               <div className="row g-3">
                 <div className="col-md-6">
-                  <label className="form-label">Full name</label>
+                  <label className="form-label me-2">Full name</label>
                   <input
                     name="fullName"
                     value={user.name}
@@ -185,13 +185,13 @@ function BuyerProposalForm() {
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label">Email</label>
+                  <label className="form-label me-2">Email</label>
                   <input name="email" value={user.email} onChange={handleChange} className={`form - control ${errors.email ? "is-invalid" : ""}`} placeholder="name@example.com" />
                   <div className="invalid-feedback">{errors.email}</div>
                 </div>
 
                 <div className="col-md-6">
-                  <label className="form-label">Phone</label>
+                  <label className="form-label me-4">Phone</label>
                   <input name="phone" value={user.phone} onChange={handleChange} className={`form - control ${errors.phone ? "is-invalid" : ""}`} placeholder="+91 98765 43210" />
                   <div className="invalid-feedback">{errors.phone}</div>
                 </div>

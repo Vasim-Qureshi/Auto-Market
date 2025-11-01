@@ -40,7 +40,7 @@ const ManageVehiclePage = () => {
   }, []);
 
   return (
-    <div className="container my-5" style={{ minHeight: '80vh', overflowY: 'auto', padding: '60px 0 100px 0' }}>
+    <div className="container" style={{ minHeight: '80vh', padding: '100px 0 100px 0' }}>
       <h3>Manage Vehicles</h3>
       <div className="row">
         { vehicles.length === 0 ? (

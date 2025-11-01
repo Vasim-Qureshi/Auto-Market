@@ -50,7 +50,7 @@ const Search = () => {
   }, [query]);
 
   return (
-    <Container className="py-5">
+    <Container style={{paddingTop:"150px"}}>
       {/* Heading */}
       <h2 className="mb-4 text-center fw-bold text-primary">
         🔍 Search Vehicles
@@ -110,10 +110,10 @@ const Search = () => {
                 />
                 <Card.Body>
                   <Card.Title className="fw-bold text-dark">
-                    {vehicle.type || `${vehicle.make} ${vehicle.model}`}
+                    {vehicle.type.toUpperCase() || `${vehicle.make} ${vehicle.model}`}
                   </Card.Title>
                   <Card.Text className="text-muted small">
-                    <strong>Type:</strong> {vehicle.type} <br />
+                    <strong>Type:</strong> {vehicle.type.charAt(0).toUpperCase() + vehicle.type.slice(1)} <br />
                     <strong>Make:</strong> {vehicle.make} <br />
                     <strong>Model:</strong> {vehicle.model} <br />
                     <strong>Category:</strong> {vehicle.category} <br />

@@ -2,7 +2,7 @@ import React from "react";
 
 const RefundPolicy = () => {
   return (
-    <div className="container my-5" style={{ minHeight: "80vh", paddingBottom: "100px"}}>
+    <div className="container" style={{ minHeight: "80vh", paddingTop: "100px", paddingBottom: "100px" }}>
       <div className="card shadow p-4">
         <h2 className="text-center mb-4">Refund & Cancellation Policy</h2>
 
