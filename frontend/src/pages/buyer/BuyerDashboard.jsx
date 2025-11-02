@@ -25,7 +25,7 @@ const BuyerDashboard = () => {
 
   const fetchProposals = async (email) => {
     try {
-      const res = await axios.get(`${URL}/api/proposal/filter?buyerEmail=${email}`);
+      const res = await axios.get(`${URL}/api/proposal/filter/buyer?buyerEmail=${email}`);
       setProposals(res.data);
     } catch (error) {
       console.error("Error fetching proposals:", error);

@@ -5,21 +5,33 @@ import URL from "../../services/api";
 const SellerDashboard = () => {
   const [proposals, setProposals] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [sellerEmail, setSellerEmail] = useState("");
 
-  // Fetch proposals from backend
+  // ✅ Get buyer email from login (JWT/localStorage/session)
   useEffect(() => {
-    const fetchProposals = async () => {
-      try {
-        const response = await axios.get(`${URL}/api/proposal`);
-        setProposals(response.data);
-      } catch (error) {
-        console.error("Error fetching proposals:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchProposals();
+    const email = "vasimqureshi1990@gmail.com";
+    if (email) {
+      setSellerEmail(email);
+    }
   }, []);
+
+  // ✅ Fetch only proposals of this buyer
+  useEffect(() => {
+    if (sellerEmail) {
+      fetchProposals(sellerEmail);
+    }
+  }, [sellerEmail]);
+
+  const fetchProposals = async (email) => {
+    try {
+      const res = await axios.get(`${URL}/api/proposal/filter/seller?sellerEmail=${email}`);
+      setProposals(res.data);
+    } catch (error) {
+      console.error("Error fetching proposals:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   if (loading) {
     return (
@@ -37,13 +49,14 @@ const SellerDashboard = () => {
       </div>
     );
   }
+  console.log(proposals);
 
   return (
     <div className="container" style={{ maxHeight: "100%", padding: "100px 0 100px 0" }}>
       <h2 className="text-center fw-bold text-primary mb-4">Seller Dashboard</h2>
 
       <div className="row">
-        {proposals.map((proposal) => (
+        {proposals.map((proposal, index) => (
           <div className="col-md-6 mb-4" key={proposal._id}>
             <div className="card shadow-sm border-0">
               <img
