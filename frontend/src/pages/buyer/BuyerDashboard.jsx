@@ -4,16 +4,36 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import URL from "../../services/api";
 
 const BuyerDashboard = () => {
+  const [user, setUser] = useState(null);
   const [proposals, setProposals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [buyerEmail, setBuyerEmail] = useState("");
 
-  // ✅ Get buyer email from login (JWT/localStorage/session)
-  useEffect(() => {
-    const email = "vasimqureshi2025@gmail.com";
-    if (email) {
-      setBuyerEmail(email);
+  // ✅ Fetch user profile first
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("No token found");
+        setLoading(false);
+        return;
+      }
+
+      const res = await axios.get(`${URL}/api/auth/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setUser(res.data);
+      setBuyerEmail(res.data.email); // ✅ Directly set email from fetched profile
+    } catch (err) {
+      console.error("Failed to load profile:", err);
+      setLoading(false);
     }
+  };
+
+  // ✅ Run once when component mounts
+  useEffect(() => {
+    fetchProfile();
   }, []);
 
   // ✅ Fetch only proposals of this buyer
@@ -25,7 +45,9 @@ const BuyerDashboard = () => {
 
   const fetchProposals = async (email) => {
     try {
-      const res = await axios.get(`${URL}/api/proposal/filter/buyer?buyerEmail=${email}`);
+      const res = await axios.get(
+        `${URL}/api/proposal/filter/buyer?buyerEmail=${email}`
+      );
       setProposals(res.data);
     } catch (error) {
       console.error("Error fetching proposals:", error);
@@ -35,11 +57,12 @@ const BuyerDashboard = () => {
   };
 
   return (
-    <div className="container" style={{padding:"100px 20px 150px 20px"}}>
+    <div className="container" style={{ padding: "100px 20px 150px 20px" }}>
       <div className="text-center mb-4">
         <h2 className="text-primary">Buyer Dashboard</h2>
         <p className="text-muted mb-0">
-          Showing proposals for: <strong>{buyerEmail || "Unknown Buyer"}</strong>
+          Showing proposals for:{" "}
+          <strong>{buyerEmail || "Unknown Buyer"}</strong>
         </p>
       </div>
 
@@ -73,7 +96,7 @@ const BuyerDashboard = () => {
                     <div>
                       <strong>
                         {p.vehicle.make.toUpperCase()} <br />
-                         {p.vehicle.model}
+                        {p.vehicle.model}
                       </strong>{" "}
                       ({p.vehicle.year})
                       <br />
@@ -84,7 +107,9 @@ const BuyerDashboard = () => {
                   <td>
                     ₹{p.offer.offerAmount.toLocaleString()}
                     <br />
-                    <small className="text-muted">{p.offer.message || "-"}</small>
+                    <small className="text-muted">
+                      {p.offer.message || "-"}
+                    </small>
                   </td>
                   <td>
                     {p.seller?.name}
