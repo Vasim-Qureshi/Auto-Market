@@ -6,16 +6,36 @@ const SellerDashboard = () => {
   const [proposals, setProposals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [sellerEmail, setSellerEmail] = useState("");
+  const [user, setUser] = useState(null);
 
-  // ✅ Get buyer email from login (JWT/localStorage/session)
-  useEffect(() => {
-    const email = "vasimqureshi1990@gmail.com";
-    if (email) {
-      setSellerEmail(email);
+  // ✅ Fetch seller profile (from token)
+  const fetchProfile = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.warn("No token found");
+        setLoading(false);
+        return;
+      }
+
+      const res = await axios.get(`${URL}/api/auth/profile`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      setUser(res.data);
+      setSellerEmail(res.data.email); // ✅ Auto set seller email
+    } catch (err) {
+      console.error("Failed to load seller profile:", err);
+      setLoading(false);
     }
+  };
+
+  // ✅ Run once when component mounts
+  useEffect(() => {
+    fetchProfile();
   }, []);
 
-  // ✅ Fetch only proposals of this buyer
+  // ✅ Fetch only proposals of this seller
   useEffect(() => {
     if (sellerEmail) {
       fetchProposals(sellerEmail);
@@ -24,7 +44,9 @@ const SellerDashboard = () => {
 
   const fetchProposals = async (email) => {
     try {
-      const res = await axios.get(`${URL}/api/proposal/filter/seller?sellerEmail=${email}`);
+      const res = await axios.get(
+        `${URL}/api/proposal/filter/seller?sellerEmail=${email}`
+      );
       setProposals(res.data);
     } catch (error) {
       console.error("Error fetching proposals:", error);
@@ -45,18 +67,20 @@ const SellerDashboard = () => {
   if (proposals.length === 0) {
     return (
       <div className="text-center mt-5 text-muted">
-        <h5>No proposals found.</h5>
+        <h5>No proposals found </h5>
       </div>
     );
   }
-  console.log(proposals);
 
   return (
-    <div className="container" style={{ maxHeight: "100%", padding: "100px 0 100px 0" }}>
+    <div className="container" style={{ padding: "100px 0 100px 0" }}>
       <h2 className="text-center fw-bold text-primary mb-4">Seller Dashboard</h2>
+      <p className="text-center text-muted mb-4">
+        Showing proposals for: <strong>{sellerEmail || "Unknown Seller"}</strong>
+      </p>
 
       <div className="row">
-        {proposals.map((proposal, index) => (
+        {proposals.map((proposal) => (
           <div className="col-md-6 mb-4" key={proposal._id}>
             <div className="card shadow-sm border-0">
               <img
