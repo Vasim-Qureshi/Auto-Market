@@ -32,6 +32,7 @@ import SellerEditVehiclePage from './pages/seller/SellerEditVehicle';
 import SellerManageVehiclePage from './pages/seller/SellerManageVehicle';
 import BuyerDashboard from './pages/buyer/BuyerDashboard';
 import "./App.css";
+import AutoMarketHome from './pages/PublicPage';
 
 function App() {
   return (
@@ -39,6 +40,7 @@ function App() {
       <Navbar />
       <Routes>
         {/* Public Routes */}
+        <Route path="/public" element={<AutoMarketHome />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
