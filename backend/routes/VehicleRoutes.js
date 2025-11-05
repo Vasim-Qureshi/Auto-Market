@@ -17,7 +17,7 @@ router.get('/', getAllVehicles);
 // router.get('/:id', getVehicleById);
 router.get('/category/:type', protect, buyerOnly, getVehiclesByCategory);
 router.get('/subcategory/:subtype', getVehiclesBySubcategory);
-router.get('/:id', protect, buyerOnly, getVehicleDetails); // must be last
+router.get('/:id', protect, getVehicleDetails); // must be last
 
 // Admin Routes
 router.post('/', protect, adminOnly, createVehicle);

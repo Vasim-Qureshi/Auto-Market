@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/useAuth';
 import URL from '../../services/api';
 
-const AddVehiclePage = () => {
+const SellerAddVehiclePage = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
 
@@ -38,11 +38,10 @@ const AddVehiclePage = () => {
     const form = new FormData();
     form.append('image', imageFile);
     setUploading(true);
-    // console.log('Uploading image:', imageFile);
+
     try {
       const token = localStorage.getItem('token');
-      // const res = await axios.post(`${URL}/api/upload/image/cloudinary`, form, {
-      const res = await axios.post(`${URL}/api/upload/admin/image/cloudinary`, form, {
+      const res = await axios.post(`${URL}/api/upload/seller/image/cloudinary`, form, {
         withCredentials: true,
         headers: {
           'Content-Type': 'multipart/form-data',
@@ -50,11 +49,9 @@ const AddVehiclePage = () => {
         },
       });
       setUploading(false);
-      // console.log('Image uploaded successfully:', res.data.imageUrl); 
       return res.data.imageUrl;
     } catch (err) {
       setUploading(false);
-      // console.error('Image upload failed:', err);
       alert('Image upload failed');
       return '';
     }
@@ -65,29 +62,39 @@ const AddVehiclePage = () => {
     try {
       const imageUrl = await uploadImage();
       const payload = { ...formData, image: imageUrl, ownerId: user?._id };
-      // console.log('Payload to send:', payload, "imageUrl:", imageUrl);
+
       const token = localStorage.getItem('token');
       if (!token) {
-        alert('You must be logged in to add a vehicle');
+        alert('You must be logged in as a seller to add a vehicle');
         return;
       }
-      await axios.post(`${URL}/api/admin/vehicles`, payload, {
+
+      await axios.post(`${URL}/api/seller/vehicles`, payload, {
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${token}`,
         },
       });
 
       alert('Vehicle added successfully!');
-      navigate('/admin/manage-vehicles');
+      navigate('/seller/manage-vehicles');
     } catch (err) {
-      // console.error(err);
+      console.error(err);
       alert('Failed to add vehicle');
     }
   };
 
   return (
-    <div className="container-fluid py-5" style={{ background: '#346fabff', marginTop: '60px', maxWidth: '900px', maxHeight: '80vh', overflowY: 'auto' }}>
-      <h3 className="text-white border-bottom pb-2">Add Vehicle</h3>
+    <div
+      className="container-fluid py-5"
+      style={{
+        background: '#346fabff',
+        marginTop: '60px',
+        maxWidth: '900px',
+        maxHeight: '80vh',
+        overflowY: 'auto',
+      }}
+    >
+      <h3 className="text-white border-bottom pb-2">Add Vehicle (Seller)</h3>
       <form onSubmit={handleSubmit}>
         <div className="row">
           {[
@@ -104,9 +111,9 @@ const AddVehiclePage = () => {
             'color',
             'transmission',
           ].map((field) => (
-
             <div className="col-md-6 mb-3" key={field}>
-              {field === "type" && (
+              {/* Vehicle Type */}
+              {field === 'type' && (
                 <select
                   className="form-control"
                   name={field}
@@ -121,6 +128,8 @@ const AddVehiclePage = () => {
                   <option value="car">Car</option>
                 </select>
               )}
+
+              {/* Vehicle Make */}
               {field === 'make' && (
                 <select
                   className="form-control"
@@ -133,50 +142,36 @@ const AddVehiclePage = () => {
                   <option value="maruti suzuki">Maruti Suzuki</option>
                   <option value="tata">Tata</option>
                   <option value="mahindra">Mahindra</option>
-                  <option value="mazda">Mazda</option>
                   <option value="ashoka leyland">Ashoka Leyland</option>
                   <option value="force">Force</option>
                   <option value="isuzu">Isuzu</option>
-                  <option value="renault">Renault</option>
-                  <option value="kia">Kia</option>
-                  <option value="skoda">Skoda</option>
                   <option value="toyota">Toyota</option>
                   <option value="honda">Honda</option>
                   <option value="ford">Ford</option>
-                  <option value="chevrolet">Chevrolet</option>
                   <option value="nissan">Nissan</option>
                   <option value="bmw">BMW</option>
-                  <option value="mercedes">Mercedes</option>
                   <option value="audi">Audi</option>
-                  <option value="volkswagen">Volkswagen</option>
+                  <option value="mercedes">Mercedes</option>
                   <option value="hyundai">Hyundai</option>
                   <option value="kia">Kia</option>
-                  <option value="subaru">Subaru</option>
-                  <option value="tesla">Tesla</option>
-                  <option value="jaguar">Jaguar</option>
-                  <option value="land rover">Land Rover</option>
-                  <option value="porsche">Porsche</option>
-                  <option value="ferrari">Ferrari</option>
-                  <option value="lamborghini">Lamborghini</option>
-                  <option value="rolls royce">Rolls Royce</option>
-                  <option value="bentley">Bentley</option>
                   <option value="other">Other</option>
                 </select>
               )}
+
+              {/* Model */}
               {field === 'model' && (
-                <select
+                <input
+                  type="text"
                   className="form-control"
+                  placeholder="Enter Model..."
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
                   required
-                >
-                  <option value="">Select Model</option>
-                  <option value="model1">Model 1</option>
-                  <option value="model2">Model 2</option>
-                  <option value="model3">Model 3</option>
-                </select>
+                />
               )}
+
+              {/* Year */}
               {field === 'year' && (
                 <select
                   className="form-control"
@@ -193,6 +188,8 @@ const AddVehiclePage = () => {
                   ))}
                 </select>
               )}
+
+              {/* Fuel Type */}
               {field === 'fuelType' && (
                 <select
                   className="form-control"
@@ -208,27 +205,33 @@ const AddVehiclePage = () => {
                   <option value="hybrid">Hybrid</option>
                 </select>
               )}
+
+              {/* Price */}
               {field === 'price' && (
                 <input
                   type="number"
                   className="form-control"
-                  placeholder='Enter Price....'
+                  placeholder="Enter Price..."
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
                   required
                 />
               )}
+
+              {/* Description */}
               {field === 'description' && (
                 <textarea
                   className="form-control"
-                  placeholder='Enter Description....'
+                  placeholder="Enter Description..."
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
                   required
                 />
               )}
+
+              {/* Category */}
               {field === 'category' && (
                 <select
                   className="form-control"
@@ -239,18 +242,18 @@ const AddVehiclePage = () => {
                 >
                   <option value="">Select Category</option>
                   <option value="coupe">Coupe</option>
-                  <option value="convertible">Convertible</option>
-                  <option value="wagon">Wagon</option>
                   <option value="sedan">Sedan</option>
                   <option value="hatchback">Hatchback</option>
                   <option value="suv">SUV</option>
                   <option value="muv">MUV</option>
-                  <option value="passenger">Passenger</option>
-                  <option value="loading">Loading</option>
                   <option value="van">Van</option>
+                  <option value="truck">Truck</option>
+                  <option value="bus">Bus</option>
                   <option value="other">Other</option>
                 </select>
               )}
+
+              {/* Transmission */}
               {field === 'transmission' && (
                 <select
                   className="form-control"
@@ -264,6 +267,8 @@ const AddVehiclePage = () => {
                   <option value="automatic">Automatic</option>
                 </select>
               )}
+
+              {/* Color */}
               {field === 'color' && (
                 <select
                   className="form-control"
@@ -275,16 +280,18 @@ const AddVehiclePage = () => {
                   <option value="">Select Color</option>
                   <option value="red">Red</option>
                   <option value="blue">Blue</option>
-                  <option value="green">Green</option>
                   <option value="black">Black</option>
                   <option value="white">White</option>
+                  <option value="silver">Silver</option>
                 </select>
               )}
+
+              {/* Mileage */}
               {field === 'mileage' && (
                 <input
                   type="number"
                   className="form-control"
-                  placeholder='Enter Mileage....'
+                  placeholder="Enter Mileage..."
                   name={field}
                   value={formData[field]}
                   onChange={handleChange}
@@ -293,19 +300,26 @@ const AddVehiclePage = () => {
               )}
             </div>
           ))}
+
+          {/* Image Upload */}
           <div className="col-md-6 mb-3">
-            <label className="form-label">Vehicle Image</label>
+            <label className="form-label text-white">Vehicle Image</label>
             <input
               type="file"
               className="form-control"
               onChange={handleFileChange}
-              accept="image/*" // Accept all image files
+              accept="image/*"
               required
             />
             {uploading && <div className="text-primary mt-1">Uploading...</div>}
           </div>
         </div>
-        <button type="submit" className="container btn btn-primary mt-3 center" disabled={uploading}>
+
+        <button
+          type="submit"
+          className="container btn btn-primary mt-3"
+          disabled={uploading}
+        >
           Add Vehicle
         </button>
       </form>
@@ -313,4 +327,4 @@ const AddVehiclePage = () => {
   );
 };
 
-export default AddVehiclePage;
+export default SellerAddVehiclePage;

@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
+import sellerRoutes from './routes/sellerRoutes.js';
 import vehicleRoutes from './routes/VehicleRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
@@ -45,6 +46,10 @@ app.use('/api/auth', authRoutes);
 
 // Admin routes
 app.use('/api/admin', adminRoutes);
+
+// Seller routes
+app.use('/api/seller', sellerRoutes);
+
 
 // Vehicle routes
 app.use('/api/vehicles', vehicleRoutes);

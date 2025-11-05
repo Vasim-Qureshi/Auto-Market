@@ -4,7 +4,7 @@ import axios from 'axios';
 import URL from '../../services/api';
 import { useAuth } from '../../hooks/useAuth';
 
-const EditVehiclePage = () => {
+const SellerEditVehiclePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { user } = useAuth();
@@ -28,23 +28,34 @@ const EditVehiclePage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  // Fetch existing vehicle data
+  
+  // ✅ Fetch seller’s own vehicle details
   const fetchVehicle = async () => {
     try {
       const token = localStorage.getItem('token');
       const res = await axios.get(`${URL}/api/vehicles/${id}`, {
-        headers: { Authorization: `Bearer ${ token }`}
+        headers: { Authorization: `Bearer ${token}` },
       });
+
+      // Check ownership
+      if (res.data.ownerId !== user._id) {
+        alert('Unauthorized access — you can only edit your own vehicles.');
+        navigate('/seller/manage-vehicles');
+        return;
+      }
+
       setFormData(res.data);
     } catch (err) {
       console.error('Error fetching vehicle:', err);
       alert('Failed to fetch vehicle details');
+      // navigate('/seller/dashboard');
     }
   };
 
   useEffect(() => {
-    fetchVehicle();
-  }, [id]);
+    if (user?._id) fetchVehicle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id, user]);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -53,52 +64,67 @@ const EditVehiclePage = () => {
     setImageFile(e.target.files[0]);
   };
 
+  // ✅ Upload image to Cloudinary (or your upload API)
   const uploadImage = async () => {
     if (!imageFile) return formData.image;
     const form = new FormData();
     form.append('image', imageFile);
     setUploading(true);
+
     try {
-      const res = await axios.post(`${URL}/api/upload/admin/image/cloudinary`, form, {
+      const token = localStorage.getItem('token');
+      const res = await axios.post(`${URL}/api/upload/seller/image/cloudinary`, form, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${ localStorage.getItem('token') }`,
+          Authorization: `Bearer ${token}`,
         },
       });
+
       setUploading(false);
       return res.data.imageUrl;
     } catch (err) {
       setUploading(false);
-      // console.error('Image upload failed:', err);
       alert('Image upload failed');
       return formData.image;
     }
   };
 
+  // ✅ Update Vehicle
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const imageUrl = await uploadImage();
-
       const updatedData = { ...formData, image: imageUrl };
 
-      await axios.put(`${URL}/api/admin/vehicles/${id}`, updatedData, {
+      const token = localStorage.getItem('token');
+      await axios.put(`${URL}/api/seller/vehicles/${id}`, updatedData, {
         headers: {
-          Authorization: `Bearer ${ localStorage.getItem('token') }`,
+          Authorization: `Bearer ${token}`,
         },
       });
 
       alert('Vehicle updated successfully');
-      navigate('/admin/manage-vehicles');
+      navigate('/seller/dashboard');
     } catch (err) {
-      // console.error(err);
+      console.error(err);
       alert('Failed to update vehicle');
     }
   };
 
   return (
-    <div className="container-fluid py-5 my-5 text-white" style={{maxWidth: '900px', maxHeight: '80vh', overflowY: 'auto', backgroundColor: '#346fabff', padding: '20px', borderRadius: '8px', boxShadow: '0 0 10px rgba(0,0,0,0.1)'}}>
-      <h3 className="border-bottom pb-2">Edit Vehicle</h3>
+    <div
+      className="container-fluid py-5 my-5 text-white"
+      style={{
+        maxWidth: '900px',
+        maxHeight: '80vh',
+        overflowY: 'auto',
+        backgroundColor: '#346fabff',
+        padding: '20px',
+        borderRadius: '8px',
+        boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+      }}
+    >
+      <h3 className="border-bottom pb-2">Edit Vehicle (Seller)</h3>
       <form onSubmit={handleSubmit}>
         <div className="row">
           {[
@@ -128,6 +154,7 @@ const EditVehiclePage = () => {
             </div>
           ))}
 
+          {/* ✅ Image Section */}
           <div className="col-md-6 mb-3">
             <label className="form-label">Change Image</label>
             <input
@@ -136,10 +163,24 @@ const EditVehiclePage = () => {
               onChange={handleFileChange}
               accept="image/*"
             />
+            {formData.image && (
+              <div className="mt-2">
+                <img
+                  src={formData.image}
+                  alt="Current Vehicle"
+                  style={{ width: '100%', borderRadius: '6px' }}
+                />
+              </div>
+            )}
             {uploading && <div className="text-primary mt-1">Uploading...</div>}
           </div>
         </div>
-        <button type="submit" className="container btn btn-primary mt-3" disabled={uploading}>
+
+        <button
+          type="submit"
+          className="container btn btn-primary mt-3"
+          disabled={uploading}
+        >
           Update Vehicle
         </button>
       </form>
@@ -147,4 +188,4 @@ const EditVehiclePage = () => {
   );
 };
 
-export default EditVehiclePage;
+export default SellerEditVehiclePage;
