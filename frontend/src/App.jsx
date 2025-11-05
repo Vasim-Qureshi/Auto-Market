@@ -5,7 +5,7 @@ import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 // import VehicleCategoryPage from './pages/VehicleCategoryPage';
 // import VehicleSubCategoryPage from './pages/VehicleSubCategoryPage';
-import TruckList from './components/TruckList';
+import VehicleCard  from './components/VehicleCard';
 import BuyerProposalForm from './pages/BuyerProposalForm';
 import VehicleDetailsPage from './pages/VehicleDetailsPage';
 // import CartPage from './pages/CartPage';
@@ -57,7 +57,7 @@ function App() {
 
         {/* Buyer Routes*/}
         <Route path="/buyer/dashboard" element={<ProtectedRoute role="buyer"><BuyerDashboard /></ProtectedRoute>} />
-        <Route path="/:type" element={<ProtectedRoute>{<TruckList />}</ProtectedRoute>} />
+        <Route path="/:type" element={<ProtectedRoute>{<VehicleCard />}</ProtectedRoute>} />
         <Route path="/vehicle/:id" element={<ProtectedRoute>{<VehicleDetailsPage />}</ProtectedRoute>} />
         <Route path="/buyerproposal/:vehicleId" element={<ProtectedRoute>{<BuyerProposalForm />}</ProtectedRoute>} />
         <Route path="/profile" element={<ProtectedRoute>{<ProfilePage />}</ProtectedRoute>} />
