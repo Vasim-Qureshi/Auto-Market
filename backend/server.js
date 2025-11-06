@@ -11,6 +11,7 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import searchRoute from './routes/searchRoutes.js';
 import cartRoutes from "./routes/cartRoutes.js"
 import proposalRoutes from './routes/proposalRoutes.js';
+import usersRoutes from "./routes/userRoutes.js";
 // import dns from 'dns';
 
 dotenv.config();
@@ -46,6 +47,7 @@ app.use('/api/auth', authRoutes);
 
 // Admin routes
 app.use('/api/admin', adminRoutes);
+app.use('/api/users', usersRoutes);
 
 // Seller routes
 app.use('/api/seller', sellerRoutes);

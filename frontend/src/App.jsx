@@ -28,6 +28,7 @@ import SellerManageVehiclePage from './pages/seller/SellerManageVehicle';
 import BuyerDashboard from './pages/buyer/BuyerDashboard';
 import "./App.css";
 import AutoMarketHome from './pages/PublicPage';
+import UsersManager from './pages/admin/UsersManager';
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
         <Route path="/admin/add-vehicle" element={<ProtectedRoute role="admin"><AddVehiclePage /></ProtectedRoute>} />
         <Route path="/admin/edit-vehicle/:id" element={<ProtectedRoute role="admin"><EditVehiclePage /></ProtectedRoute>} />
         <Route path="/admin/manage-vehicles" element={<ProtectedRoute role="admin"><ManageVehiclePage /></ProtectedRoute>} />
+        <Route path="/admin/users-manager" element={<ProtectedRoute role="admin"><UsersManager /></ProtectedRoute>} />
 
         {/* Password Management Routes */}
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />

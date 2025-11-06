@@ -1,8 +1,7 @@
 // File: controllers/adminController.js
 import User from '../models/User.js';
 import Vehicle from '../models/Vehicle.js';
-import Order from '../models/Order.js'; // if you have orders
-
+import Proposal from '../models/Proposal.js';
 // Add new vehicle
 export const addVehicle = async (req, res) => {
   try {
@@ -18,7 +17,7 @@ export const getAdminStats = async (req, res) => {
   try {
     const totalUsers = await User.countDocuments();
     const totalVehicles = await Vehicle.countDocuments();
-    const totalOrders = await Order.countDocuments();
+    const totalProposals = await Proposal.countDocuments();
 
     const salesData = await Order.aggregate([
       { $group: { _id: null, totalSales: { $sum: '$totalAmount' } } }
@@ -29,7 +28,7 @@ export const getAdminStats = async (req, res) => {
     res.json({
       totalUsers,
       totalVehicles,
-      totalOrders,
+      totalProposals,
       totalSales
     });
   } catch (err) {

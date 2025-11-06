@@ -7,7 +7,7 @@ const AdminDashboard = () => {
   const [stats, setStats] = useState({
     totalUsers: 0,
     totalVehicles: 0,
-    totalOrders: 0,
+    totalProposals: 0,
     totalSales: 0,
   });
 
@@ -60,8 +60,8 @@ const AdminDashboard = () => {
         <div className="col-md-3">
           <div className="card text-white bg-warning shadow-sm mb-3">
             <div className="card-body">
-              <h5 className="card-title">Total Orders</h5>
-              <p className="card-text fs-4">{stats.totalOrders}</p>
+              <h5 className="card-title">Total Proposals</h5>
+              <p className="card-text fs-4">{stats.totalProposals}</p>
             </div>
           </div>
         </div>
@@ -74,32 +74,6 @@ const AdminDashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* Admin Shortcuts 
-      <div className="row">
-        <div className="col-md-4 mb-3">
-          <Link to="/admin/add-vehicle" className="btn btn-outline-primary w-100 py-3">
-            ➕ Add Vehicle
-          </Link>
-        </div>
-        <div className="col-md-4 mb-3">
-          <Link to="/admin/manage-vehicles" className="btn btn-outline-success w-100 py-3">
-            🛠 Manage Vehicles
-          </Link>
-        </div>
-        <div className="col-md-4 mb-3">
-          <button
-            className="btn btn-outline-secondary w-100 py-3"
-            onClick={() => {
-              const id = prompt('Enter vehicle ID to edit:');
-              if (id) navigate(`/admin/edit-vehicle/${id}`);
-            }}
-          >
-            ✏️ Edit Vehicle (via ID)
-          </button>
-        </div>
-      </div>
-      */}
     </div>
   );
 };
