@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
-import VehicleCard  from './components/VehicleCard';
+import VehicleCard from './components/VehicleCard';
 import BuyerProposalForm from './pages/BuyerProposalForm';
 import VehicleDetailsPage from './pages/VehicleDetailsPage';
 import ProfilePage from './pages/ProfilePage';
@@ -43,31 +43,32 @@ function App() {
         <Route path="/terms-and-conditions" element={<TermAndCondition />} />
         <Route path="/refund-policy" element={<RefundPolicy />} />
 
+        {/* Protected Routes */}
+        <Route path="/profile" element={<ProtectedRoute>{<ProfilePage />}</ProtectedRoute>} />
+
         {/* Seller Routes*/}
         <Route path="/seller/dashboard" element={<ProtectedRoute role="seller"><SellerDashboard /></ProtectedRoute>} />
         <Route path="/seller/add-vehicle" element={<ProtectedRoute role="seller"><SellerAddVehiclePage /></ProtectedRoute>} />
         <Route path="/seller/edit-vehicle/:id" element={<ProtectedRoute role="seller"><SellerEditVehiclePage /></ProtectedRoute>} />
         <Route path="/seller/manage-vehicles" element={<ProtectedRoute role="seller"><SellerManageVehiclePage /></ProtectedRoute>} />
 
-
         {/* Buyer Routes*/}
         <Route path="/buyer/dashboard" element={<ProtectedRoute role="buyer"><BuyerDashboard /></ProtectedRoute>} />
-        <Route path="/:type" element={<ProtectedRoute>{<VehicleCard />}</ProtectedRoute>} />
-        <Route path="/vehicle/:id" element={<ProtectedRoute>{<VehicleDetailsPage />}</ProtectedRoute>} />
-        <Route path="/buyerproposal/:vehicleId" element={<ProtectedRoute>{<BuyerProposalForm />}</ProtectedRoute>} />
-        <Route path="/profile" element={<ProtectedRoute>{<ProfilePage />}</ProtectedRoute>} />
-        <Route path="/search" element={<ProtectedRoute>{<Search />}</ProtectedRoute>} />
-
-        {/* Password Management Routes */}
-        <Route path="/forgot-password" element={<ProtectedRoute><ForgotPasswordPage /></ProtectedRoute>} />
-        <Route path="/reset-password" element={<ProtectedRoute><ResetPasswordPage /></ProtectedRoute>} />
-        <Route path="/verify-otp" element={<ProtectedRoute><VerifyOTPPage /></ProtectedRoute>} />
+        <Route path="/:type" element={<ProtectedRoute role="buyer">{<VehicleCard />}</ProtectedRoute>} />
+        <Route path="/vehicle/:id" element={<ProtectedRoute role="buyer">{<VehicleDetailsPage />}</ProtectedRoute>} />
+        <Route path="/buyerproposal/:vehicleId" element={<ProtectedRoute role="buyer">{<BuyerProposalForm />}</ProtectedRoute>} />
+        <Route path="/search" element={<ProtectedRoute role="buyer">{<Search />}</ProtectedRoute>} />
 
         {/* Admin Routes */}
         <Route path="/admin/dashboard" element={<ProtectedRoute role="admin"><AdminDashboard /></ProtectedRoute>} />
         <Route path="/admin/add-vehicle" element={<ProtectedRoute role="admin"><AddVehiclePage /></ProtectedRoute>} />
         <Route path="/admin/edit-vehicle/:id" element={<ProtectedRoute role="admin"><EditVehiclePage /></ProtectedRoute>} />
         <Route path="/admin/manage-vehicles" element={<ProtectedRoute role="admin"><ManageVehiclePage /></ProtectedRoute>} />
+
+        {/* Password Management Routes */}
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
+        <Route path="/verify-otp" element={<VerifyOTPPage />} />
 
       </Routes>
       <Footer />

@@ -17,8 +17,6 @@ export const createProposal = async (req, res) => {
       seller,
     });
 
-    console.log("Proposal created successfully:", newProposal);
-
     res.status(201).json(newProposal);
   } catch (error) {
     console.error("Error creating proposal:", error);

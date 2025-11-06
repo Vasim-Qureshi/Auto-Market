@@ -42,13 +42,15 @@ const Navbar = () => {
       >
         {/* Search Bar */}
         <form className="d-flex ms-auto me-3 my-2 my-lg-0">
-          <input
-            className="form-control me-2"
-            type="button"
-            value="Search vehicles..."
-            onClick={handleSearch}
-            style={{ cursor: "pointer" }}
-          />
+          {user && user.role === "buyer" && (
+            <input
+              className="form-control me-2"
+              type="button"
+              value="Search vehicles..."
+              onClick={handleSearch}
+              style={{ cursor: "pointer" }}
+            />
+          )}
         </form>
 
         {/* Menu Items */}
