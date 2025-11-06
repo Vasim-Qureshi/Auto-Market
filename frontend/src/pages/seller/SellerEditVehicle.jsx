@@ -28,7 +28,7 @@ const SellerEditVehiclePage = () => {
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  
+
   // ✅ Fetch seller’s own vehicle details
   const fetchVehicle = async () => {
     try {
@@ -36,13 +36,6 @@ const SellerEditVehiclePage = () => {
       const res = await axios.get(`${URL}/api/vehicles/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-
-      // Check ownership
-      if (res.data.ownerId !== user._id) {
-        alert('Unauthorized access — you can only edit your own vehicles.');
-        navigate('/seller/manage-vehicles');
-        return;
-      }
 
       setFormData(res.data);
     } catch (err) {
@@ -53,9 +46,8 @@ const SellerEditVehiclePage = () => {
   };
 
   useEffect(() => {
-    if (user?._id) fetchVehicle();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id, user]);
+    fetchVehicle();
+  }, [id]);
 
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -104,7 +96,7 @@ const SellerEditVehiclePage = () => {
       });
 
       alert('Vehicle updated successfully');
-      navigate('/seller/dashboard');
+      navigate('/seller/manage-vehicles');
     } catch (err) {
       console.error(err);
       alert('Failed to update vehicle');

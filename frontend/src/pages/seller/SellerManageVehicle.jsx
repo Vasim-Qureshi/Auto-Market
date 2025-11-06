@@ -7,52 +7,18 @@ import { useAuth } from '../../hooks/useAuth';
 const SellerManageVehiclePage = () => {
   const [vehicles, setVehicles] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [sellerEmail, setSellerEmail] = useState("");
-  const [user, setUser] = useState(null);
 
-  // ✅ Fetch seller profile (from token)
-  const fetchProfile = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.warn("No token found");
-        setLoading(false);
-        return;
-      }
-
-      const res = await axios.get(`${URL}/api/auth/profile`, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
-
-      setUser(res.data);
-      setSellerEmail(res.data.email); // ✅ Auto set seller email
-    } catch (err) {
-      console.error("Failed to load seller profile:", err);
-      setLoading(false);
-    }
-  };
-
-  // ✅ Run once when component mounts
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-
-  // ✅ Fetch only proposals of this seller
-  useEffect(() => {
-    if (sellerEmail) {
-      fetchVehicles(sellerEmail);
-    }
-  }, [sellerEmail]);
-
-
+  const {user} = useAuth();
+  const ownerId = user.id
+  // console.log(user.id);
 
   // ✅ Fetch seller's own vehicles only
-  const fetchVehicles = async (email) => {
-    if (!email) return;
+  const fetchVehicles = async (owenerId) => {
+    if (!ownerId) return;
 
     try {
       const token = localStorage.getItem('token');
-      const res = await axios.get(`${URL}/api/seller/vehicles?sellerEmail=${email}`, {
+      const res = await axios.get(`${URL}/api/seller/vehicles?sellerId=${ownerId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
