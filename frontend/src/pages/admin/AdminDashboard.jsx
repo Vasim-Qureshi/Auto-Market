@@ -22,9 +22,6 @@ const AdminDashboard = () => {
 
       if (res.status === 200) {
         setStats(res.data);
-        console.log('res:', res.data);
-        console.log("stats:",stats);
-        
       }
     } catch (err) {
       console.error('Failed to fetch dashboard stats:', err);

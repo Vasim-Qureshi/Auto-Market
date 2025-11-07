@@ -18,18 +18,18 @@ export const getAdminStats = async (req, res) => {
     const totalUsers = await User.countDocuments();
     const totalVehicles = await Vehicle.countDocuments();
     const totalProposals = await Proposal.countDocuments();
-
-    const salesData = await Order.aggregate([
-      { $group: { _id: null, totalSales: { $sum: '$totalAmount' } } }
+/*
+    const salesData = await Proposal.aggregate([
+      { $group: { _id: null, totalSales: { $sum: '$saleAmount' } } }
     ]);
 
     const totalSales = salesData[0]?.totalSales || 0;
-
+*/
     res.json({
       totalUsers,
       totalVehicles,
       totalProposals,
-      totalSales
+      // totalSales
     });
   } catch (err) {
     res.status(500).json({ message: 'Failed to load admin stats' });
