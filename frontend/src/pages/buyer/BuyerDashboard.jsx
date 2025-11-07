@@ -8,11 +8,11 @@ const BuyerDashboard = () => {
   const [proposals, setProposals] = useState([]);
   const [loading, setLoading] = useState(true);
   const [buyerEmail, setBuyerEmail] = useState("");
+  const token = localStorage.getItem("token");
 
   // ✅ Fetch user profile first
   const fetchProfile = async () => {
     try {
-      const token = localStorage.getItem("token");
       if (!token) {
         console.warn("No token found");
         setLoading(false);
@@ -45,9 +45,9 @@ const BuyerDashboard = () => {
 
   const fetchProposals = async (email) => {
     try {
-      const res = await axios.get(
-        `${URL}/api/proposal/filter/buyer?buyerEmail=${email}`
-      );
+      const res = await axios.get(`${URL}/api/proposal/filter/buyer?buyerEmail=${email}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       setProposals(res.data);
     } catch (error) {
       console.error("Error fetching proposals:", error);
