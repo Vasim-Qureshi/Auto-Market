@@ -33,42 +33,58 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <div className="container-fluid" style={{paddingTop:"100px"}}>
+    <div className="container-fluid" style={{ paddingTop: "100px" }}>
       <h3 className="mb-4">Admin Dashboard</h3>
 
       {/* Stats Cards */}
       <div className="row mb-5">
+
+        {/* Total Users */}
         <div className="col-md-3">
-          <div className="card text-white bg-primary shadow-sm mb-3">
-            <div className="card-body">
-              <h5 className="card-title">Total Users</h5>
-              <p className="card-text fs-4">{stats.totalUsers}</p>
+          <Link to="/admin/users-manager" style={{ textDecoration: 'none' }}>
+            <div className="card text-white bg-primary shadow-sm mb-3 hover-zoom">
+              <div className="card-body">
+                <h5 className="card-title">Total Users</h5>
+                <p className="card-text fs-4">{stats.totalUsers}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
+
+        {/* Total Vehicles */}
         <div className="col-md-3">
-          <div className="card text-white bg-success shadow-sm mb-3">
-            <div className="card-body">
-              <h5 className="card-title">Total Vehicles</h5>
-              <p className="card-text fs-4">{stats.totalVehicles}</p>
+          <Link to="/admin/manage-vehicles" style={{ textDecoration: 'none' }}>
+            <div className="card text-white bg-success shadow-sm mb-3 hover-zoom">
+              <div className="card-body">
+                <h5 className="card-title">Total Vehicles</h5>
+                <p className="card-text fs-4">{stats.totalVehicles}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
+
+        {/* Total Proposals */}
         <div className="col-md-3">
-          <div className="card text-white bg-warning shadow-sm mb-3">
-            <div className="card-body">
-              <h5 className="card-title">Total Proposals</h5>
-              <p className="card-text fs-4">{stats.totalProposals}</p>
+          <Link to="/admin/manage-proposals" style={{ textDecoration: 'none' }}>
+            <div className="card text-white bg-warning shadow-sm mb-3 hover-zoom">
+              <div className="card-body">
+                <h5 className="card-title">Total Proposals</h5>
+                <p className="card-text fs-4">{stats.totalProposals}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
+
+        {/* Total Sales */}
         <div className="col-md-3">
-          <div className="card text-white bg-dark shadow-sm mb-3">
-            <div className="card-body">
-              <h5 className="card-title">Total Sales</h5>
-              <p className="card-text fs-4">₹{stats.sales}</p>
+          <Link to="/admin/sales" style={{ textDecoration: 'none' }}>
+            <div className="card text-white bg-dark shadow-sm mb-3 hover-zoom">
+              <div className="card-body">
+                <h5 className="card-title">Total Sales</h5>
+                <p className="card-text fs-4">₹{stats.totalSales}</p>
+              </div>
             </div>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

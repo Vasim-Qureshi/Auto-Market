@@ -60,3 +60,25 @@ export const getProposalsBySellerEmail = async (req, res) => {
     res.status(500).json({ message: "Error fetching proposals" });
   }
 };
+
+/**
+ * DELETE a proposal by ID
+ * @route DELETE /api/proposals/:id
+ */
+export const deleteProposal = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Find proposal by ID and delete it
+    const deletedProposal = await Proposal.findByIdAndDelete(id);
+
+    if (!deletedProposal) {
+      return res.status(404).json({ message: "Proposal not found" });
+    }
+
+    res.status(200).json({ message: "Proposal deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting proposal:", error);
+    res.status(500).json({ message: "Server error while deleting proposal" });
+  }
+};

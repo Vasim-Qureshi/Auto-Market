@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { createProposal, getProposals, getProposalsByBuyerEmail, getProposalsBySellerEmail } from '../controllers/proposalController.js';
-import { buyerOnly, protect } from "../middleware/authMiddleware.js";
+import { createProposal, getProposals, getProposalsByBuyerEmail, getProposalsBySellerEmail, deleteProposal } from '../controllers/proposalController.js';
+import { adminOnly, buyerOnly, protect, sellerOnly } from "../middleware/authMiddleware.js";
 
 const router = Router();
 
@@ -8,8 +8,9 @@ const router = Router();
 router.post('/', protect, buyerOnly, createProposal);
 
 // ✅ GET all proposals
-router.get("/", getProposals);
-router.get("/filter/buyer", getProposalsByBuyerEmail);
-router.get("/filter/seller", getProposalsBySellerEmail);
+router.get("/",protect, adminOnly, getProposals);
+router.delete("/:id",protect,adminOnly, deleteProposal);
+router.get("/filter/buyer",protect, buyerOnly, getProposalsByBuyerEmail);
+router.get("/filter/seller",protect, sellerOnly, getProposalsBySellerEmail);
 
 export default router;
