@@ -6,10 +6,8 @@ import authRoutes from './routes/authRoutes.js';
 import adminRoutes from './routes/adminRoutes.js';
 import sellerRoutes from './routes/sellerRoutes.js';
 import vehicleRoutes from './routes/VehicleRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
 import uploadRoutes from './routes/uploadRoutes.js';
 import searchRoute from './routes/searchRoutes.js';
-import cartRoutes from "./routes/cartRoutes.js"
 import proposalRoutes from './routes/proposalRoutes.js';
 import usersRoutes from "./routes/userRoutes.js";
 // import dns from 'dns';
@@ -52,26 +50,11 @@ app.use('/api/users', usersRoutes);
 // Seller routes
 app.use('/api/seller', sellerRoutes);
 
-
 // Vehicle routes
 app.use('/api/vehicles', vehicleRoutes);
 
-// Order routes
-app.use('/api/orders', orderRoutes);
-
-// Cart routes
-app.use('/api/cart', cartRoutes);
-
-// checkout routesr
-app.use('/api/checkout', (req, res) => {
-  // Placeholder for checkout routes
-  res.status(501).send('Checkout API not implemented yet');
-});
-
 // Upload routes for images by multer
 app.use('/api/upload', uploadRoutes);
-// Serve static image files in the uploads directory
-app.use('/uploads', express.static('uploads'));
 
 // proposal routes
 app.use('/api/proposal', proposalRoutes);
