@@ -7,13 +7,13 @@ const SponsoredDeals = () => (
       <div className="col-md-6 mb-3">
         <div className="border p-3 rounded text-center bg-white">
           <strong>🔥 Car Loan Offers - Low Interest Rates!</strong>
-          <p>Sponsored by XYZ Bank. <a href="#">Apply Now</a></p>
+          <p>Sponsored by XYZ Bank. <a target='_blank' href="https://www.hdfcbank.com/personal/tools-and-calculators/car-loan-emi-calculator">Apply Now</a></p>
         </div>
       </div>
       <div className="col-md-6 mb-3">
         <div className="border p-3 rounded text-center bg-white">
           <strong>🛡️ Vehicle Insurance Partner</strong>
-          <p>Save 25% with ABC Insurance. <a href="#">Get Quote</a></p>
+          <p>Save 25% with ABC Insurance. <a target='_blank' href="https://www.turtlemintinsurance.com/">Get Quote</a></p>
         </div>
       </div>
     </div>
