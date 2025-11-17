@@ -1,52 +1,70 @@
 // File: context/AuthContext.jsx
-import React, { createContext, useState, useEffect } from 'react';
-import {jwtDecode} from 'jwt-decode';
+import React, { createContext, useState, useEffect } from "react";
+import axios from "axios";
+import URL from '../services/api.js'; // Adjust the import path as necessary
 
-export const AuthContext = createContext();
+const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true); // 🟡 Add this
+  const [loading, setLoading] = useState(true);
 
-  const login = (token) => {
-    localStorage.setItem('token', token);
-    const decoded = jwtDecode(token);
-    setUser(decoded);
+  // ===============================
+  // LOGIN (no token handling here)
+  // ===============================
+  const login = async (email, password) => {
+    const res = await axios.post(
+      `${URL}/api/auth/login`,
+      { email, password },
+      { withCredentials: true } // IMPORTANT
+    );
+
+    // After login fetch user
+    await getMe();
+    return res.data;
   };
 
-  const logout = () => {
-    localStorage.removeItem('token');
+  // ===============================
+  // LOGOUT (server clears cookie)
+  // ===============================
+  const logout = async () => {
+    await axios.post(
+      `${URL}/api/auth/logout`,
+      {},
+      { withCredentials: true }
+    );
     setUser(null);
   };
 
-  const checkUser = () => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      setLoading(false);
-      return;
-    }
+  // ===============================
+  // GET USER FROM /api/me
+  // ===============================
+  const getMe = async () => {
     try {
-      const decoded = jwtDecode(token);
-      if (decoded.exp * 1000 < Date.now()) {
-        logout();
-      } else {
-        setUser(decoded);
-      }
-    } catch {
-      logout();
+      const res = await axios.get(
+        `${URL}/api/auth/me`,
+        { withCredentials: true }
+      );
+      setUser(res.data);
+    } catch (err) {
+      console.error("Failed to fetch user:", err);
+      setUser(null);
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
+  // Load user on first visit
   useEffect(() => {
-    checkUser();
+    getMe();
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, loading }}>
-      {children}
+    <AuthContext.Provider value={{ user, loading, login, logout }}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
 
 export default AuthProvider;
+export { AuthContext };

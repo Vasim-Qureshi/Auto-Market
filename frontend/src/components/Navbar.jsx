@@ -9,21 +9,22 @@ const Navbar = () => {
 
   const handleSearch = () => navigate("/search");
 
-  const handleLogout = () => {
-    logout();
-    navigate("/login");
+  const handleLogout = async () => {
+    await logout();          // 🔥 Backend cookie clear
+    navigate("/login");      // Redirect
   };
 
   const toggleMenu = () => setMenuOpen(!menuOpen);
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-danger fixed-top shadow-sm px-4 ">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-danger fixed-top shadow-sm px-4">
+      
       {/* Brand */}
       <Link className="navbar-brand fw-bold" to="/">
         🚗 AutoMarket
       </Link>
 
-      {/* Mobile Toggle Button */}
+      {/* Mobile Toggle */}
       <button
         className="navbar-toggler"
         type="button"
@@ -35,12 +36,12 @@ const Navbar = () => {
         <span className="navbar-toggler-icon"></span>
       </button>
 
-      {/* Navbar Links */}
+      {/* Navbar Menu */}
       <div
         className={`collapse navbar-collapse ${menuOpen ? "show" : ""}`}
         id="navbarNav"
       >
-        {/* Search Bar */}
+        {/* Search Bar – only for buyer */}
         <form className="d-flex ms-auto me-3 my-2 my-lg-0">
           {user && user.role === "buyer" && (
             <input
@@ -64,7 +65,7 @@ const Navbar = () => {
                 </Link>
               </li>
 
-              {/* Admin Role */}
+              {/* ADMIN */}
               {user.role === "admin" && (
                 <>
                   <li className="nav-item">
@@ -72,11 +73,13 @@ const Navbar = () => {
                       ➕ Add Vehicle
                     </Link>
                   </li>
+
                   <li className="nav-item">
                     <Link to="/admin/manage-vehicles" className="nav-link">
                       🛠 Manage Vehicles
                     </Link>
                   </li>
+
                   <li className="nav-item">
                     <Link className="nav-link" to="/admin/dashboard">
                       📊 Dashboard
@@ -85,7 +88,7 @@ const Navbar = () => {
                 </>
               )}
 
-              {/* Buyer Role */}
+              {/* BUYER */}
               {user.role === "buyer" && (
                 <li className="nav-item">
                   <Link className="nav-link" to="/buyer/dashboard">
@@ -94,7 +97,7 @@ const Navbar = () => {
                 </li>
               )}
 
-              {/* Seller Role */}
+              {/* SELLER */}
               {user.role === "seller" && (
                 <>
                   <li className="nav-item">
@@ -102,11 +105,13 @@ const Navbar = () => {
                       ➕ Add Vehicle
                     </Link>
                   </li>
+
                   <li className="nav-item">
                     <Link to="/seller/manage-vehicles" className="nav-link">
                       🧾 Manage Vehicles
                     </Link>
                   </li>
+
                   <li className="nav-item">
                     <Link className="nav-link" to="/seller/dashboard">
                       💼 Seller Dashboard
@@ -115,7 +120,7 @@ const Navbar = () => {
                 </>
               )}
 
-              {/* Logout */}
+              {/* LOGOUT */}
               <li className="nav-item ms-lg-3">
                 <button
                   className="btn btn-light btn-sm text-danger px-3 fw-semibold"
@@ -127,11 +132,13 @@ const Navbar = () => {
             </>
           ) : (
             <>
+              {/* GUEST LINKS */}
               <li className="nav-item">
                 <Link className="nav-link" to="/login">
                   Login
                 </Link>
               </li>
+
               <li className="nav-item">
                 <Link className="nav-link" to="/signup">
                   Signup

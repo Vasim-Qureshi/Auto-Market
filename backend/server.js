@@ -10,6 +10,7 @@ import uploadRoutes from './routes/uploadRoutes.js';
 import searchRoute from './routes/searchRoutes.js';
 import proposalRoutes from './routes/proposalRoutes.js';
 import usersRoutes from "./routes/userRoutes.js";
+import cookieParser from "cookie-parser";
 // import dns from 'dns';
 
 dotenv.config();
@@ -20,6 +21,7 @@ dotenv.config();
 // mongoose.set('debug', true);
 
 const app = express();
+app.use(cookieParser());
 
 const allowedOrigins = ["https://auto-market-neon.vercel.app", "https://automarket.globalinfotechnology.in", "http://localhost:5173"]
 

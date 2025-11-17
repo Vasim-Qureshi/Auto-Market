@@ -1,31 +1,52 @@
-import jwt from 'jsonwebtoken';
-import User from '../models/User.js';
+import jwt from "jsonwebtoken";
+import User from "../models/User.js";
 
 export const protect = async (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-  if (!token) return res.status(401).json({ message: 'Unauthorized' });
+  // Token from HttpOnly Cookie
+  const token = req.cookies?.token;
+
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized: No token found" });
+  }
 
   try {
+    // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = await User.findById(decoded.id).select('-password');
-    // req.user = decoded
+
+    // Get user and remove password
+    req.user = await User.findById(decoded.id).select("-password");
+
+    if (!req.user) {
+      return res.status(401).json({ message: "Unauthorized: User not found" });
+    }
+
     next();
   } catch (err) {
-    res.status(401).json({ message: 'Token invalid' });
+    return res.status(401).json({ message: "Invalid or expired token" });
   }
 };
 
+// =====================================
+// ROLE BASED ACCESS
+// =====================================
+
 export const adminOnly = (req, res, next) => {
-  if (req.user.role !== 'admin') return res.status(403).json({ message: 'Admin access only' });
+  if (!req.user || req.user.role !== "admin") {
+    return res.status(403).json({ message: "Admin access only" });
+  }
   next();
 };
 
 export const buyerOnly = (req, res, next) => {
-  if (req.user.role !== 'buyer') return res.status(403).json({ message: 'buyer access only' });
+  if (!req.user || req.user.role !== "buyer") {
+    return res.status(403).json({ message: "Buyer access only" });
+  }
   next();
 };
 
 export const sellerOnly = (req, res, next) => {
-  if (req.user.role !== 'seller') return res.status(403).json({ message: 'seller access only' });
+  if (!req.user || req.user.role !== "seller") {
+    return res.status(403).json({ message: "Seller access only" });
+  }
   next();
 };
